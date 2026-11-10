@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JLPT N5 文法操練｜大家的日本語 第1–9課</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23fff'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23D9333F'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='%23fff' font-family='serif'%3E文%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#26221e;
+    --ink-soft:#5c554d;
+    --paper:#faf7f0;
+    --paper-deep:#f1ece0;
+    --line:#ddd5c7;
+    --accent:#d9333f;
+    --accent-deep:#b32831;
+    --navy:#1f3a5f;
+    --ok:#2e7d4f;
+    --ok-bg:#e8f3ec;
+    --ng:#c0392b;
+    --ng-bg:#fbeae7;
+    --serif:"Noto Serif JP","Yu Mincho","Hiragino Mincho ProN","MS PMincho","MS Mincho",serif;
+    --sans:"PingFang TC","Microsoft JhengHei","Hiragino Sans","Noto Sans TC",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    background-image:radial-gradient(var(--paper-deep) 1px, transparent 1px);
+    background-size:22px 22px;
+    color:var(--ink);
+    line-height:1.7;
+    min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:16px 16px 64px;}
+  .nav-top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 4px 10px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:10px;background:var(--accent);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:20px;font-weight:700;flex:none;
+  }
+  .brand-tt{font-size:15px;font-weight:700;line-height:1.3;}
+  .brand-sub{font-size:11px;color:var(--ink-soft);}
+  .home-link{
+    font-size:13px;color:var(--ink-soft);background:none;border:none;cursor:pointer;
+    padding:8px 12px;border-radius:8px;font-family:var(--sans);
+  }
+  .home-link:hover{background:var(--paper-deep);}
+  .exam-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;letter-spacing:.14em;color:var(--accent-deep);font-weight:700;
+    padding-bottom:2px;
+  }
+  .exam-tag::before{content:"";width:18px;height:2px;background:var(--accent);}
+  h1.page-tt{
+    font-size:26px;line-height:1.35;margin:6px 0 8px;letter-spacing:.02em;
+  }
+  h1.page-tt .n5{
+    font-family:var(--serif);color:var(--accent);
+  }
+  .lede{font-size:14px;color:var(--ink-soft);margin-bottom:20px;max-width:56ch;}
+  /* ===== 首頁：模擬試卷入口 ===== */
+  .mock-entry{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 16px;margin-bottom:26px;
+    box-shadow:0 1px 0 rgba(0,0,0,.03);
+  }
+  .mock-entry .row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .mock-entry h2{font-size:17px;margin-bottom:2px;}
+  .mock-entry p{font-size:13px;color:var(--ink-soft);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    border:none;cursor:pointer;font-family:var(--sans);font-weight:700;
+    border-radius:10px;transition:transform .06s ease, box-shadow .12s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{
+    background:var(--accent);color:#fff;font-size:15px;
+    padding:12px 22px;box-shadow:0 2px 6px rgba(217,51,63,.28);
+  }
+  .btn-primary:hover{background:var(--accent-deep);}
+  .btn-ghost{
+    background:transparent;border:1.5px solid var(--line);color:var(--ink);
+    font-size:14px;padding:10px 18px;
+  }
+  .btn-ghost:hover{border-color:var(--ink-soft);}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;}
+  /* ===== 課程卡片 ===== */
+  .sec-tt{
+    display:flex;align-items:baseline;gap:8px;margin:0 2px 10px;
+  }
+  .sec-tt h2{font-size:15px;font-weight:700;}
+  .sec-tt span{font-size:12px;color:var(--ink-soft);}
+  .lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media(min-width:640px){.lesson-grid{grid-template-columns:repeat(3,1fr);}}
+  .lesson-card{
+    text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:14px 14px 12px;cursor:pointer;font-family:var(--sans);
+    display:flex;flex-direction:column;gap:6px;min-height:44px;
+    transition:border-color .12s ease, box-shadow .12s ease;
+  }
+  .lesson-card:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(217,51,63,.10);}
+  .lc-head{display:flex;align-items:baseline;justify-content:space-between;gap:6px;}
+  .lc-no{font-size:13px;font-weight:700;color:var(--accent-deep);letter-spacing:.06em;}
+  .lc-theme{font-size:12px;color:var(--ink-soft);}
+  .lc-points{font-size:13px;line-height:1.55;color:var(--ink);}
+  .lc-pts{font-family:var(--serif);}
+  .lc-meta{font-size:11px;color:var(--ink-soft);display:flex;justify-content:space-between;}
+  .lc-best{color:var(--ok);font-weight:700;}
+  .src-note{
+    font-size:12px;color:var(--ink-soft);margin-top:26px;padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+  /* ===== 測驗頁 ===== */
+  .quiz-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    margin-bottom:12px;flex-wrap:wrap;
+  }
+  .quiz-mode{font-size:12px;font-weight:700;color:var(--accent-deep);letter-spacing:.05em;}
+  .quiz-prog{font-size:12px;color:var(--ink-soft);}
+  .timer{
+    font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;color:var(--navy);
+    background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px 10px;
+  }
+  .timer.overtime{color:var(--ng);border-color:var(--ng);}
+  .progress-bar{height:4px;background:var(--paper-deep);border-radius:2px;overflow:hidden;margin-bottom:18px;}
+  .progress-fill{height:100%;background:var(--accent);width:0;transition:width .25s ease;}
+  .q-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 18px 18px;}
+  .q-inst{font-size:12.5px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6;}
+  .q-tag{
+    display:inline-block;font-size:11px;font-weight:700;color:var(--navy);
+    background:#eef2f7;border-radius:6px;padding:2px 8px;margin-bottom:12px;
+  }
+  .q-text{
+    font-family:var(--serif);font-size:20px;line-height:1.9;letter-spacing:.02em;
+    margin-bottom:4px;
+  }
+  .q-hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px;}
+  .opt-list{display:grid;gap:10px;margin-top:14px;}
+  .opt{
+    display:flex;align-items:center;gap:12px;min-height:52px;
+    background:#fff;border:1.5px solid var(--line);border-radius:10px;
+    padding:10px 14px;cursor:pointer;font-family:var(--sans);text-align:left;
+    font-size:16px;transition:border-color .1s ease, background .1s ease;
+  }
+  .opt:hover:not(.locked){border-color:var(--accent);}
+  .opt .num{
+    width:26px;height:26px;border-radius:50%;flex:none;
+    border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:var(--ink-soft);
+  }
+  .opt.locked{cursor:default;}
+  .opt.correct{border-color:var(--ok);background:var(--ok-bg);}
+  .opt.correct .num{border-color:var(--ok);background:var(--ok);color:#fff;}
+  .opt.wrong{border-color:var(--ng);background:var(--ng-bg);}
+  .opt.wrong .num{border-color:var(--ng);background:var(--ng);color:#fff;}
+  .opt .opt-body{font-family:var(--serif);font-size:17px;line-height:1.6;}
+  .opt .opt-body .star{color:var(--accent);font-weight:700;}
+  /* 並べ替え（排序題）*/
+  .order-skeleton{
+    font-family:var(--serif);font-size:19px;line-height:2.1;letter-spacing:.02em;
+  }
+  .order-skeleton .slot{
+    display:inline-block;min-width:52px;border-bottom:2px solid var(--ink);
+    text-align:center;color:var(--ink-soft);font-size:14px;font-weight:700;
+    padding:0 4px;margin:0 2px;
+  }
+  .order-box{
+    margin-top:14px;border:1px dashed var(--ink-soft);border-radius:10px;
+    padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;
+    font-family:var(--serif);font-size:17px;
+  }
+  .order-box .w{display:inline-flex;gap:2px;}
+  .order-box .star-mark{color:var(--accent);font-weight:700;}
+  /* 解說 */
+  .explain{
+    margin-top:16px;border-top:1px solid var(--line);padding-top:14px;
+  }
+  .verdict{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;margin-bottom:10px;}
+  .verdict.ok{color:var(--ok);}
+  .verdict.ng{color:var(--ng);}
+  .exp-grammar{
+    display:inline-block;background:#fff8e6;border:1px solid #eadfa8;color:#7a5b12;
+    font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-bottom:8px;
+  }
+  .exp-full{font-size:14px;margin-bottom:8px;}
+  .exp-full .jp{font-family:var(--serif);font-size:16px;line-height:1.8;display:block;}
+  .exp-full .zh{color:var(--ink-soft);font-size:13px;display:block;}
+  .exp-body{font-size:14px;line-height:1.85;color:var(--ink);}
+  .exp-body b{color:var(--accent-deep);}
+  .exp-src{margin-top:10px;font-size:12px;color:var(--ink-soft);}
+  .q-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;}
+  .btn-next{background:var(--navy);color:#fff;font-size:14px;padding:11px 24px;box-shadow:0 2px 6px rgba(31,58,95,.25);}
+  .btn-next:hover{background:#16304f;}
+  /* ===== 結果頁 ===== */
+  .result-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:24px 20px 20px;text-align:center;margin-bottom:22px;
+  }
+  .rs-score{font-size:44px;font-weight:800;color:var(--accent);line-height:1.1;font-variant-numeric:tabular-nums;}
+  .rs-score small{font-size:16px;font-weight:700;color:var(--ink-soft);}
+  .rs-detail{font-size:14px;color:var(--ink-soft);margin-top:8px;}
+  .rs-verdict-line{font-size:15px;margin-top:10px;font-weight:700;}
+  .rs-verdict-line.pass{color:var(--ok);}
+  .rs-verdict-line.fail{color:var(--ng);}
+  .rs-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+  .review-item{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;
+  }
+  .review-item.ok{border-left:none;}
+  .ri-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+  .ri-badge{font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;}
+  .ri-badge.ok{background:var(--ok-bg);color:var(--ok);}
+  .ri-badge.ng{background:var(--ng-bg);color:var(--ng);}
+  .ri-src{font-size:11px;color:var(--ink-soft);margin-left:auto;}
+  .ri-q{font-family:var(--serif);font-size:16px;line-height:1.8;margin-bottom:8px;}
+  .ri-q .blank{border-bottom:2px solid var(--ink);min-width:40px;display:inline-block;}
+  .ri-answer{font-size:13.5px;margin-bottom:6px;line-height:1.7;}
+  .ri-answer .yours{font-weight:700;}
+  .ri-answer .yours.ng{color:var(--ng);}
+  .ri-answer .yours.ok{color:var(--ok);}
+  .ri-exp{font-size:13.5px;color:var(--ink);line-height:1.8;}
+  .ri-exp .jp{font-family:var(--serif);}
+  .hidden{display:none !important;}
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+    background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:50;
+  }
+  .toast.show{opacity:.92;}
+  footer{margin-top:40px;font-size:12px;color:var(--ink-soft);text-align:center;}
+  @media(max-width:520px){
+    h1.page-tt{font-size:22px;}
+    .q-text,.order-skeleton{font-size:18px;}
+    .wrap{padding:12px 14px 56px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 頂部 ===== -->
+  <div class="nav-top">
+    <div class="brand">
+      <div class="brand-mark">文</div>
+      <div>
+        <div class="brand-tt">JLPT N5 文法操練</div>
+        <div class="brand-sub">《大家的日本語》初級1（第二版）第1–9課＋N5加強題庫</div>
+      </div>
+    </div>
+    <button class="home-link hidden" id="btnHome" onclick="go('home')">回到首頁</button>
+  </div>
+
+  <!-- ===== 檢視：首頁 ===== -->
+  <section id="viewHome">
+    <div class="exam-tag">MOCK EXAM</div>
+    <h1 class="page-tt">日語文法模擬試題 <span class="n5">N5</span></h1>
+    <p class="lede">根據教材第 1–9 課文法重點編寫，再加 24 題 N5 公開練習精選（官方問題例及網上題庫），共 87 題。每題作答後即時批改，並附詳盡解釋同出處。</p>
+
+    <div class="mock-entry">
+      <div class="row">
+        <div>
+          <h2>混合模擬試卷</h2>
+          <p>由全部 87 題題庫隨機抽 20 題，計時 15 分鐘，交卷後先至睇到答案同解釋，貼近實戰。</p>
+        </div>
+        <button class="btn btn-primary" onclick="startMock()">開始模擬試卷</button>
+      </div>
+    </div>
+
+    <div class="sec-tt">
+      <h2>按課操練</h2>
+      <span>即時批改・每題附解釋</span>
+    </div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+
+    <p class="src-note">出題範圍同解釋根據《大家的日本語 初級1（第二版）》第 1–9 課「文型・文法」內容編寫。每課文法要點列喺課程卡片下面，操練之前可以先重溫。加強題庫（加強①–③）改編自 JLPT 官方問題例、Practice JLPT 及 The Japanese Page 嘅公開練習，同樣附答案解釋。</p>
+  </section>
+
+  <!-- ===== 檢視：測驗 ===== -->
+  <section id="viewQuiz" class="hidden">
+    <div class="quiz-head">
+      <span class="quiz-mode" id="quizMode"></span>
+      <span class="quiz-prog" id="quizProg"></span>
+      <span class="timer hidden" id="quizTimer"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+
+    <div class="q-card">
+      <div class="q-tag" id="qTag"></div>
+      <div class="q-inst" id="qInst"></div>
+      <div id="qBody"></div>
+      <div id="optArea"></div>
+      <div id="explainArea"></div>
+      <div class="q-actions">
+        <span class="q-hint" id="qFeedbackLine"></span>
+        <button class="btn btn-next hidden" id="btnNext" onclick="nextQ()">下一題</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 檢視：結果 ===== -->
+  <section id="viewResult" class="hidden">
+    <div class="result-card">
+      <div class="exam-tag">RESULT</div>
+      <div class="rs-score" id="rsScore">0<small> / 0</small></div>
+      <div class="rs-detail" id="rsDetail"></div>
+      <div class="rs-verdict-line" id="rsVerdict"></div>
+      <div class="rs-actions">
+        <button class="btn btn-primary" id="btnRetry" onclick="retry()">再做一次</button>
+        <button class="btn btn-ghost" onclick="go('home')">返去揀課程</button>
+      </div>
+    </div>
+    <div class="sec-tt"><h2>逐題重溫</h2><span id="rsSummary"></span></div>
+    <div id="reviewList"></div>
+  </section>
+
+  <footer>日本語能力試驗 N5 ・ 文法模擬練習 ・ 依據《大家的日本語 初級1（第二版）》第 1–9 課＋N5 公開練習精選</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   課程文法重點（資料來源：教材第1–9課「文型・文法」頁）
+   ========================================================= */
+const LESSONS = {
+  1:{theme:'初次見面', pts:['名詞は名詞です','〜じゃありません','〜ですか（疑問句）','も（都係）','の（所屬）','〜さん']},
+  2:{theme:'這個/那個', pts:['これ・それ・あれ','この・その・あの＋名詞','そうです／ちがいます','〜か、〜か（選擇疑問）','の（代替名詞）','お〜']},
+  3:{theme:'喺邊度', pts:['ここ・そこ・あそこ','名詞は場所です','どこ／どちら','どこの（產地・公司）','こそあど一覽表']},
+  4:{theme:'幾點／幾時', pts:['〜時〜分（時刻）','ます・ません・ました・ませんでした','時間に','から〜まで','と（同埋）','〜ね']},
+  5:{theme:'去邊度', pts:['場所へ行きます','乗り物で','〜と（一齊）','いつ','〜よ','そうですね']},
+  6:{theme:'做啲乜', pts:['を（動作對象）','〜をします','何をしますか','なん／なに','場所で','〜ませんか／〜ましょう']},
+  7:{theme:'用乜嘢／畀人', pts:['道具で','〜語で何ですか','〜に〜をあげます','〜に〜をもらいます','もう〜ました']},
+  8:{theme:'形容詞', pts:['い形容詞／な形容詞','〜くないです／じゃありません','い形＋名詞／な形な＋名詞','〜が（不過）','とても／あまり','どんな']},
+  9:{theme:'鍾意／原因', pts:['〜が好きです／あります','〜が分かります','よく・少し・たくさん・あまり・全然','〜から（因為）','どうして']},
+  10:{label:'加強①', theme:'助詞總複習', pts:['で（手段）','を（離開地點）','に（會面・存在）','が（動作者）','や（舉例列舉）','より（比較）','といっしょに']},
+  11:{label:'加強②', theme:'動詞形・句型', pts:['〜てもいいですか','〜たあとで','まだです','〜てください','〜てから','同義句（上手→下手等）']},
+  12:{label:'加強③', theme:'排序＋綜合', pts:['排序題：の連接・て形連接','ほど（配否定）','〜ています','おととい／同義句']}
+};
+function lessonLabel(n){ return (LESSONS[n] && LESSONS[n].label) ? LESSONS[n].label : '第'+n+'課'; }
+
+/* =========================================================
+   題庫
+   type: 'mc' = 四選一；'order' = 排序題（揀★字嘅位置）
+   ========================================================= */
+const QUESTIONS = [
+/* ---------- 第1課 ---------- */
+{id:'1-1',lesson:1,type:'mc',point:'〜は〜です',s:'ミラーさん＿＿会社員です。',opts:['は','を','へ','と'],a:0,full:'ミラーさんは 会社員です。',zh:'米勒先生是公司職員。',exp:'助詞<b>「は」</b>表示前面嘅名詞係句子嘅主題，讀音係「わ」。要留意「を」係標示動作對象（第6課）、「へ」係表示方向（第5課）、「と」係「同埋」（第4課），呢度只係講「米勒先生係咩人」，所以用「は」。'},
+{id:'1-2',lesson:1,type:'mc',point:'〜じゃありません',s:'サントスさんは 学生＿＿。先生です。',opts:['です','ではあります','ました','じゃありません'],a:3,full:'サントスさんは 学生じゃ ありません。先生です。',zh:'桑托斯唔係學生，佢係老師。',exp:'後半句「先生です」（佢係老師）已經限定咗語境，所以前半句要用否定形<b>「じゃ（では）ありません」</b>：「唔係學生，係老師」。揀「です」會變成「係學生，係老師」，意思矛盾；「ではあります」唔係正確講法（否定先係「ではありません」）；「ました」係動詞過去形，名詞句唔用得。日常會話多數用「じゃありません」，正式場合用「ではありません」。'},
+{id:'1-3',lesson:1,type:'mc',point:'〜ですか（疑問句）',s:'「あの方は ＿＿ですか。」「ミラーさんです。」',opts:['だれ','どこ','いつ','どんな'],a:0,full:'あの方は だれですか。',zh:'嗰位係邊個？——係米勒先生。',exp:'問「邊個」用<b>「だれ」</b>，句尾加「か」構成疑問句，語序不變。答句「ミラーさんです」對應問人。「どこ」問地方、「いつ」問時間、「どんな」後面要接名詞（第8課），都唔適用。'},
+{id:'1-4',lesson:1,type:'mc',point:'〜も',s:'ミラーさんは アメリカ人です。グプタさん＿＿アメリカ人です。',opts:['へ','も','の','を'],a:1,full:'グプタさんも アメリカ人です。',zh:'古普塔都係美國人。',exp:'<b>「も」</b>用喺將相同嘅事物作為前提嚟陳述嘅時候，即係「都係」。前面已經講咗米勒係美國人，而古普塔都一樣，所以用「も」。「へ」「の」「を」放喺人名後面都唔可以表達「都係」呢個意思。'},
+{id:'1-5',lesson:1,type:'mc',point:'名詞の名詞',s:'これは わたし＿＿本です。',opts:['の','は','が','と'],a:0,full:'これは わたしの 本です。',zh:'呢本係我嘅書。',exp:'前面嘅名詞修飾後面嘅名詞時，用<b>「の」</b>連接兩個名詞，表示所屬或者屬性：「わたしの本」＝我嘅書。「は」係主題助詞，唔可以放喺兩個名詞中間做連接。'},
+{id:'1-6',lesson:1,type:'mc',point:'〜さん',s:'初めまして。わたしは 田中＿＿。',opts:['です','さんです','ちゃんです','さん'],a:0,full:'初めまして。わたしは 田中です。',zh:'初次見面，我叫田中。',exp:'<b>「さん」係敬稱，只可以用喺別人個名後面，自己介紹自己時絕對唔可以加</b>，否則會好失禮。「ちゃん」係對小朋友嘅親暱稱呼，一樣唔可以自己用。自我介紹直接講「わたしは〜です」就得。'},
+/* ---------- 第2課 ---------- */
+{id:'2-1',lesson:2,type:'mc',point:'これ・それ・あれ',s:'（相手の手にあるものを指して）＿＿は 何ですか。',opts:['これ','それ','あれ','どこ'],a:1,full:'それは 何ですか。',zh:'（指住對方手上嘅嘢）嗰個係咩嚟？',exp:'<b>「それ」</b>指離聽話人近嘅嘢。題目指示「相手の手にある」（喺對方手上），所以係「それ」。「これ」指離說話人近嘅嘢；「あれ」指離雙方都遠嘅嘢；「どこ」係問地方嘅疑問詞，唔可以指物件。'},
+{id:'2-2',lesson:2,type:'mc',point:'この・その・あの＋名詞',s:'（自分のそばのかばんを指して）＿＿かばんは わたしのです。',opts:['これ','この','ここ','あれ'],a:1,full:'この かばんは わたしのです。',zh:'（指住自己隔籬個袋）呢個袋係我嘅。',exp:'修飾名詞嗰陣要用<b>「この」</b>，唔可以好似「これ」咁獨立用。「これかばん」係錯嘅，「これ」後面唔可以跟名詞。「ここ」係指地方；「あれ」指遠處物件同時亦都唔可以修飾名詞。'},
+{id:'2-3',lesson:2,type:'mc',point:'そうです／ちがいます',s:'「それは あなたの 辞書ですか。」「はい、＿＿。」',opts:['そう','ちがい','どれ','ここ'],a:0,full:'……はい、そうです。',zh:'……係呀，冇錯。',exp:'回答「係咪〜」嘅名詞疑問句，肯定答「はい、<b>そうです</b>」。否定嘅話就唔會用「そう」，而係講「<b>ちがいます</b>」（唔係）或者直接講出正確答案。'},
+{id:'2-4',lesson:2,type:'mc',point:'〜か、〜か（選擇疑問）',s:'「これは『9』ですか、＿＿ですか。」「…『9』です。」',opts:['「7」','はい','いいえ','そう'],a:0,full:'これは『9』ですか、『7』ですか。',zh:'呢個係「9」定係「7」？——係「9」。',exp:'選擇疑問句「〜か、〜か」係喺兩樣嘢入面揀一樣，<b>回答時唔使講「はい」或者「いいえ」</b>，直接重複自己揀嘅答案就可以。'},
+{id:'2-5',lesson:2,type:'mc',point:'の（代替名詞）',s:'「その かばんは あなたのですか。」「いいえ、わたしの＿＿。」',opts:['じゃありません','ません','のじゃありません','です'],a:0,full:'……いいえ、わたしのじゃ ありません。',zh:'……唔係，唔係我嘅。',exp:'答語入面嘅<b>「の」代替咗問句出現過嘅名詞「かばん」</b>（＝わたしのかばん），否定形照常用「じゃありません」。「のません」「ののじゃありません」都係錯嘅組合；揀「です」就會同「いいえ」矛盾。要留意「の」可以代替物件，但<b>唔可以代替人</b>。'},
+{id:'2-6',lesson:2,type:'mc',point:'名詞の名詞（所屬・關係）',s:'この 本は 佐藤さん＿＿です。',opts:['の','は','が','も'],a:0,full:'この 本は 佐藤さんのです。',zh:'呢本書係佐藤先生嘅。',exp:'「佐藤さん<b>の</b>です」＝佐藤先生嘅（書）。呢度「の」代替咗名詞「本」，表示所屬。呢個句型第2課學：名詞₁說明名詞₂同咩事物有關，或者表示所屬。'},
+{id:'2-7',lesson:2,type:'order',point:'の（所屬）＋じゃありません',lead:'あれは',box:['じゃ','かばん','ありません','ミラーさんの'],star:1,a:1,full:'あれは ミラーさんの かばんじゃ ありません。',zh:'嗰個唔係米勒先生個袋。',exp:'先諗好成句嘅順序：「あれは（ミラーさんの）（かばん）（じゃ）（ありません）」。「の」連接所屬（米勒嘅），否定形「じゃありません」放句尾。<b>★「かばん」係第2個位</b>。'},
+/* ---------- 第3課 ---------- */
+{id:'3-1',lesson:3,type:'mc',point:'どこ',s:'「お手洗いは ＿＿ですか。」「あそこです。」',opts:['どこ','どなた','いつ','なに'],a:0,full:'お手洗いは どこですか。',zh:'洗手間喺邊？——喺嗰邊。',exp:'<b>「どこ」</b>係問地方嘅疑問詞。句尾加「か」構成疑問句，語序不變，將想問嘅嘢換做疑問詞就得了。「どなた」問人；「いつ」問時間；「なに」問嘢。'},
+{id:'3-2',lesson:3,type:'mc',point:'名詞は場所です',s:'トイレは 2階＿＿。',opts:['です','ます','あります','ません'],a:0,full:'トイレは 2階です。',zh:'洗手間喺二樓。',exp:'「名詞は 場所です」呢個句型用嚟表示人或者物件所在嘅地方，後面用<b>「です」</b>結尾。「2階ます」「2階ません」文法上唔成立；「あります」要配合「にあります」先啱（第10課句型），唔可以直接講「2階あります」。'},
+{id:'3-3',lesson:3,type:'mc',point:'どこの（產地・公司）',s:'「これは ＿＿の コンピューターですか。」「日本のです。」',opts:['どこ','だれ','いつ','なんさい'],a:0,full:'これは どこの コンピューターですか。',zh:'呢部電腦係邊度生產嘅？——日本嘅。',exp:'問國家、公司等生產地時用<b>「どこの」</b>，答案會係「日本の」「パワー電気の」咁。「だれの」係問物主（邊個嘅），但答句係「日本の」（國家），所以唔夾；「いつの」「なんさいの」唔成立。'},
+{id:'3-4',lesson:3,type:'mc',point:'あそこ（場所）',s:'（はなれた場所を指して）美術館は ＿＿です。',opts:['ここ','そこ','あそこ','これ'],a:2,full:'美術館は あそこです。',zh:'美術館喺嗰邊。',exp:'<b>「あそこ」</b>指離說話人同聽話人都比較遠嘅地方。「ここ」係我自己所在嘅地方；「そこ」係對方所在嘅地方；「これ」係指物體，唔係指地方。'},
+{id:'3-5',lesson:3,type:'mc',point:'どちら（方向・鄭重）',s:'（丁寧に）お手洗いは ＿＿ですか。',opts:['どちら','どなた','いつ','なんさい'],a:0,full:'お手洗いは どちらですか。',zh:'請問洗手間喺邊個方向？',exp:'<b>「どちら」</b>本來係問方向，亦可以代替「どこ」問地方，語氣比「どこ」更鄭重，喺酒店、商場問路用佢最有禮貌。'},
+{id:'3-6',lesson:3,type:'mc',point:'お〜（敬意）',s:'＿＿国は どちらですか。',opts:['お','を','の','が'],a:0,full:'お国は どちらですか。',zh:'請問您嚟自邊個國家？',exp:'接頭詞<b>「お」</b>放喺同對方或者第三者有關嘅事物之前，表達說話人嘅敬意，例如「お国」「お仕事」。留意「お」唔係助詞，唔會改變句子結構。'}
+];
+QUESTIONS.push(
+/* ---------- 第4課 ---------- */
+{id:'4-1',lesson:4,type:'mc',point:'時間に',s:'毎朝 6時＿＿起きます。',opts:['に','で','へ','が'],a:0,full:'毎朝 6時に 起きます。',zh:'每日朝早六點起身。',exp:'表示時間嘅名詞後面加<b>「に」</b>，表示動作進行嘅時間。注意「きょう」「あした」「けさ」「まいあさ」等詞<b>後面唔加「に」</b>；「〜曜日」「あさ」「ばん」就可以加可以唔加。「で」「へ」「が」都唔可以表示動作發生嘅具體時間。'},
+{id:'4-2',lesson:4,type:'mc',point:'〜ました（過去）',s:'きのうの朝 6時に 起き＿＿。',opts:['ます','ました','ません','ましょう'],a:1,full:'きのうの朝 6時に 起きました。',zh:'噚日朝早六點起咗身。',exp:'<b>「きのうの朝」（噚日朝早）係明確嘅過去時間</b>，所以動詞要用過去式<b>「〜ました」</b>。「〜ます」敘述而家嘅習慣或者將來；「〜ません」係非過去否定；「〜ましょう」係邀請，三個都唔可以配「きのう」。'},
+{id:'4-3',lesson:4,type:'mc',point:'〜ませんでした（過去否定）',s:'「きのう 勉強しましたか。」「いいえ、＿＿。」',opts:['勉強します','勉強しました','勉強しません','勉強しませんでした'],a:3,full:'……いいえ、勉強しませんでした。',zh:'——唔係，琴日冇溫書。',exp:'「動詞ます」嘅過去否定形係<b>「〜ませんでした」</b>：肯定過去「しました」／否定過去「しませんでした」／否定而家「しません」。回答「〜ましたか」否定時先講「いいえ」，再講否定形。'},
+{id:'4-4',lesson:4,type:'mc',point:'から〜まで',s:'銀行は 9時＿＿3時までです。',opts:['から','まで','に','で'],a:0,full:'銀行は 9時から 3時までです。',zh:'銀行由朝早九點營業到下晝三點。',exp:'<b>「から」表示起點，「まで」表示終點</b>，可以指時間亦可以指場所，經常一齊用，但亦可以分開單獨用（例：9時から働きます）。「〜から〜まで」後面仲可以加「です」講主題嘅開始同結束。'},
+{id:'4-5',lesson:4,type:'mc',point:'と（並列）',s:'銀行の休みは 土曜日＿＿日曜日です。2日とも 休みです。',opts:['と','か','も','の'],a:0,full:'銀行の休みは 土曜日と 日曜日です。2日とも 休みです。',zh:'銀行嘅休息日係星期六同星期日，兩日都休息。',exp:'名詞並列嗰陣，名詞同名詞之間用<b>「と」</b>連接，即係「同埋」。後半句「2日とも休みです」（兩日都休息）限定咗係兩日一齊休息；「か」係「或者」（只係其中一日），意思唔夾；「も」「の」放喺呢度唔成立。'},
+{id:'4-6',lesson:4,type:'mc',point:'〜ね',s:'「山田さんの電話番号は 871の6813です。」「871の6813＿＿。」',opts:['ます','ですね','ですよ','ません'],a:1,full:'……871の6813ですね。',zh:'——871-6813，係咁嘛。',exp:'助詞<b>「ね」</b>放句尾，表示想得到對方同意、向對方確認。呢度係重複對方啱啱講嘅號碼做確認，所以用「ね」。「よ」係將對方<b>唔知道</b>嘅新資訊話俾對方知，同「重複確認」唔夾；「ます」「ません」係動詞結尾，電話號碼係名詞，唔用得。'},
+{id:'4-7',lesson:4,type:'order',point:'から〜まで',lead:'わたしは',box:['5時まで','勉強します','毎日','9時から'],star:0,a:2,full:'わたしは 毎日 9時から 5時まで 勉強します。',zh:'我每日由朝早九點溫書到下晝五點。',exp:'成句順序：わたしは（毎日）（9時から）（5時まで）（勉強します）——頻率詞「毎日」喺最前，之後「9時から」起點同「5時まで」終點連住用（第4課「から〜まで」），動詞「勉強します」最尾。<b>★「5時まで」係第3個位</b>。'},
+/* ---------- 第5課 ---------- */
+{id:'5-1',lesson:5,type:'mc',point:'場所へ行きます',s:'京都＿＿行きます。',opts:['へ','を','と','の'],a:0,full:'京都へ 行きます。',zh:'去京都。',exp:'表示移動嘅動詞（行きます／来ます／帰ります），移動嘅方向用助詞<b>「へ」</b>表示，<b>讀音係「え」</b>。「を」係動作對象；「と」喺呢度係「同埋」或者「一齊」；「の」係連接名詞。'},
+{id:'5-2',lesson:5,type:'mc',point:'乗り物で',s:'電車＿＿東京へ行きます。',opts:['で','に','へ','を'],a:0,full:'電車で 東京へ行きます。',zh:'搭電車去東京。',exp:'<b>「で」表示手段、方法</b>，接喺交通工具名詞後面。方向用「へ」、交通手段用「で」，兩個助詞各有分工。「電車に」「電車へ」「電車を」都唔可以表示「搭電車」呢個手段。另外要留意：徒步行走時用「あるいて」，<b>唔可以加「で」</b>。'},
+{id:'5-3',lesson:5,type:'mc',point:'〜と（一齊）',s:'佐藤さん＿＿日本へ来ました。',opts:['と','で','に','を'],a:0,full:'佐藤さんと 日本へ来ました。',zh:'同佐藤先生一齊嚟咗日本。',exp:'助詞<b>「と」表示同自己一齊行動嘅人或者動物</b>。「佐藤さんで」「佐藤さんに」「佐藤さんを」都唔可以表示「同某人一齊」。單獨行動時就用「ひとりで」，而且唔可以用「と」。呢個「と」同第4課並列名詞嘅「と」意思唔同。'},
+{id:'5-4',lesson:5,type:'mc',point:'いつ',s:'「＿＿大阪へ行きますか。」「来週 行きます。」',opts:['いつ','何時','どこ','だれ'],a:0,full:'いつ 大阪へ行きますか。',zh:'幾時去大阪？——下星期去。',exp:'問時間除咗「何時」「何曜日」呢啲帶「なん」嘅疑問詞之外，仲有<b>「いつ」</b>。注意「いつ」後面<b>唔接助詞「に」</b>。答案係「来週」（下星期）呢類日子，所以用「いつ」而唔係問幾多點嘅「何時」。'},
+{id:'5-5',lesson:5,type:'mc',point:'〜よ',s:'「この電車は 甲子園へ行きますか。」「いいえ、行きません。次の『普通』＿＿。」',opts:['ですか','ですね','ですよ','でした'],a:2,full:'……次の『普通』ですよ。',zh:'——唔去，下一班慢車先去呀。',exp:'助詞<b>「よ」</b>放句尾，用嚟將對方唔知道嘅嘢，或者自己嘅判斷、意見話俾對方知。呢度係話俾對方知「去甲子園嘅係下一班」，係新資訊，所以用「よ」而唔係確認嘅「ね」。'},
+{id:'5-6',lesson:5,type:'mc',point:'〜から（起點）',s:'駅＿＿うちまで 歩いて 帰りました。',opts:['から','で','まで','へ'],a:0,full:'駅から うちまで 歩いて 帰りました。',zh:'由車站行路返到屋企。',exp:'<b>「から」表示起點，「まで」表示終點</b>，呢句係「由車站（起點）行到屋企（終點）」。「駅で」「駅まで」「駅へ」都唔可以同後面嘅「うちまで」一齊成立。另外「歩いて」（行路）本身已經係手段，<b>唔會講「歩いてで」</b>。'},
+{id:'5-7',lesson:5,type:'order',point:'乗り物で・場所へ',lead:'ワットさんは',box:['うちへ','毎晩','タクシーで','帰りました'],star:1,a:0,full:'ワットさんは 毎晩 タクシーで うちへ帰りました。',zh:'瓦特先生每晚搭的士返屋企。',exp:'成句順序：ワットさんは（毎晩）（タクシーで）（うちへ）（帰りました）——<b>頻率副詞「毎晩」一定排最前</b>，跟住交通手段「タクシーで」、方向「うちへ」，動詞「帰りました」最尾。<b>★「毎晩」係第1個位</b>。'},
+/* ---------- 第6課 ---------- */
+{id:'6-1',lesson:6,type:'mc',point:'を（動作對象）',s:'ジュース＿＿飲みます。',opts:['を','と','が','へ'],a:0,full:'ジュースを 飲みます。',zh:'飲果汁。',exp:'他動詞嘅賓語（動作嘅對象）用助詞<b>「を」</b>表示：ジュースを飲みます、新聞を読みます。「と」係「同埋」、「が」喺第9課先學（表示喜好同能力嘅對象）、「へ」係方向，都唔可以標示飲嘅對象。'},
+{id:'6-2',lesson:6,type:'mc',point:'場所で（動作場所）',s:'駅＿＿新聞を買います。',opts:['で','に','を','へ'],a:0,full:'駅で 新聞を買います。',zh:'喺車站買報紙。',exp:'本課學嘅<b>「で」接喺表示場所嘅名詞後面，表示動作發生嘅場所</b>。唔好同第5課交通工具嘅「で」撈亂，亦唔好同方向嘅「へ」撈亂。動作對象「新聞」就用「を」。'},
+{id:'6-3',lesson:6,type:'mc',point:'〜ませんか（邀請）',s:'「一緒に 昼ごはんを 食べ＿＿。」「ええ、食べましょう。」',opts:['ません','ませんか','ました','ます'],a:1,full:'一緒に 昼ごはんを 食べませんか。',zh:'一齊食晏晝飯好唔好？——好呀，一齊食。',exp:'<b>「〜ませんか」</b>係邀請對方一齊做嘢嘅客氣講法，對方應承時答「ええ、〜ましょう」。「食べません」（唔食）、「食べました」（食咗）、「食べます」（會食）都係陳述句，同「一緒に」嘅邀請語境同「ええ、食べましょう」嘅回應唔夾。'},
+{id:'6-4',lesson:6,type:'mc',point:'何をしますか',s:'「月曜日 ＿＿を しますか。」「京都へ行きます。」',opts:['何','だれ','どこ','いつ'],a:0,full:'月曜日 何を しますか。',zh:'星期一做啲乜？——去京都。',exp:'<b>「何をしますか」</b>係問「做啲乜嘢」嘅疑問句。答案係動作（去京都），唔係人（だれ）、地方（どこ）或者時間（いつ）。'},
+{id:'6-5',lesson:6,type:'mc',point:'なん／なに',s:'「＿＿で 東京へ行きますか。」「新幹線で行きます。」',opts:['何','どこ','だれ','いつ'],a:0,full:'何で 東京へ行きますか。',zh:'坐乜嘢去東京？——搭新幹線去。',exp:'「なん」同「なに」意思一樣，但<b>後續單詞詞頭係「た行」「だ行」「な行」，同埋帶量詞時，讀「なん」</b>：何ですか、何で（手段）。問手段嘅「なんで」仲可以問理由，想明確講手段時可用「なにで」。'},
+{id:'6-6',lesson:6,type:'mc',point:'〜をします',s:'日曜日に テニスを＿＿。',opts:['します','食べます','飲みます','買います'],a:0,full:'日曜日に テニスをします。',zh:'星期日打網球。',exp:'<b>「します」可以接喺好多名詞後面做賓語</b>，意思係做嗰個名詞所表示嘅內容：サッカーをします（踢波）、宿題をします（做功課）、仕事をします（做嘢）。運動、遊戲一律用「〜をします」。'},
+{id:'6-7',lesson:6,type:'order',point:'を（動作對象）＋の',lead:'わたしは',box:['日本の','新聞を','毎朝','買います'],star:1,a:2,full:'わたしは 毎朝 日本の 新聞を 買います。',zh:'我每日朝早買日本嘅報紙。',exp:'成句順序：わたしは（毎朝）（日本の）（新聞を）（買います）——頻率「毎朝」最前；<b>「日本の」一定要緊貼「新聞を」前面</b>（の修飾名詞），動詞「買います」最尾。<b>★「新聞を」係第3個位</b>。'}
+);
+QUESTIONS.push(
+/* ---------- 第7課 ---------- */
+{id:'7-1',lesson:7,type:'mc',point:'道具で（手段・工具）',s:'はし＿＿ラーメンを食べます。',opts:['で','に','を','は'],a:0,full:'はしで ラーメンを食べます。',zh:'用筷子食拉麵。',exp:'本課學嘅<b>「で」表示手段、方法</b>，接喺工具名詞後面（はし＝筷子、スプーン＝匙羹），亦可以係語言（日本語でレポートを書きます＝用日文寫報告）。食嘅對象「ラーメン」就用「を」。'},
+{id:'7-2',lesson:7,type:'mc',point:'〜に〜をあげます',ctx:'語境：我買咗花，想送俾木村。',s:'木村さんに 花を＿＿。',opts:['あげました','もらいました','借りました','習いました'],a:0,full:'木村さんに 花を あげました。',zh:'送咗花俾木村。',exp:'<b>「あげます」＝送俾人</b>，接受嘅對象用「に」表示。「もらいました」（收到）同「借りました」（借入）方向調轉咗，同語境「我送俾木村」唔夾；「習いました」（學習）唔可以接「花」。呢類題目一定要睇清楚動作方向。'},
+{id:'7-3',lesson:7,type:'mc',point:'〜から（機構）',s:'銀行＿＿お金を借りました。',opts:['から','に','で','まで'],a:0,full:'銀行から お金を借りました。',zh:'向銀行借咗錢。',exp:'「もらいます」「借ります」呢類動作，對象係<b>公司、學校等組織時，唔用「に」，要用「から」</b>。呢個係「に」同「から」嘅重要分別。'},
+{id:'7-4',lesson:7,type:'mc',point:'もう〜ました',s:'「もう 荷物を送りましたか。」「はい、＿＿。」',opts:['送りました','送りません','送りませんでした','まだです'],a:0,full:'……はい、もう 送りました。',zh:'——係呀，已經寄咗。',exp:'<b>「もう」＝已經</b>，同「動詞ました」一齊用。肯定回答「はい、もう〜ました」；未做完嘅否定回答係「いいえ、まだです」，<b>唔可以答「〜ませんでした」</b>（咁樣係「過去冇做過」，唔係「仲未做完」）。'},
+{id:'7-5',lesson:7,type:'mc',point:'〜語で何ですか',s:'「『ありがとう』は 英語＿＿何ですか。」',opts:['で','に','を','は'],a:0,full:'『ありがとう』は 英語で 何ですか。',zh:'「ありがとう」用英文點講？',exp:'問某個詞用另一種語言點講，用<b>「言葉は 〜語で 何ですか」</b>句型，「で」表示手段（用某種語言）。'},
+{id:'7-6',lesson:7,type:'mc',point:'〜に〜をもらいます',ctx:'語境：我向卡莉娜借咗一隻CD。',s:'わたしは カリナさんに CDを＿＿。',opts:['借りました','貸しました','あげました','送りました'],a:0,full:'わたしは カリナさんに CDを借りました。',zh:'我向卡莉娜借咗CD。',exp:'「借ります」＝借入（人哋借俾我），「貸します」＝借出（我借俾人）。呢兩個動詞嘅對象都用「に」表示，所以一定要睇方向：<b>「我向佢借」用「借りました」，「我借俾佢」用「貸しました」</b>。'},
+{id:'7-7',lesson:7,type:'order',point:'〜語で（手段）',lead:'',box:['英語で','『bag』','『かばん』は','です'],star:1,a:2,full:'『かばん』は 英語で 『bag』です。',zh:'「かばん」英文係「bag」。',exp:'成句順序：（『かばん』は）（英語で）（『bag』）（です）——主題「『かばん』は」最前，「英語で」表示用邊種語言講，英文單詞『bag』喺「です」前面。<b>★『bag』係第3個位</b>。'},
+/* ---------- 第8課 ---------- */
+{id:'8-1',lesson:8,type:'mc',point:'〜が（轉折）',s:'日本の食べ物は おいしい＿＿、高いです。',opts:['が','と','で','ね'],a:0,full:'日本の食べ物は おいしいですが、高いです。',zh:'日本嘅嘢食好味，不過好貴。',exp:'<b>「が」表示轉折（不過、但是）</b>，前半句同後半句評價一正一反。「おいしいと」「おいしいで」「おいしいね」都唔可以接續後半句。呢個「が」唔係第9課喜好句嘅「が」，要睇前後文判斷。'},
+{id:'8-2',lesson:8,type:'mc',point:'い形容詞否定形',s:'この本は あまり＿＿。',opts:['おもしろいです','おもしろくないです','おもしろいじゃありません','おもしろくなです'],a:1,full:'この本は あまり おもしろくないです。',zh:'呢本書唔係幾好睇（冇癮）。',exp:'<b>「あまり」要配否定形</b>，而い形容詞嘅非過去否定形係去咗詞尾「い」接<b>「くないです」</b>。「じゃありません」係名詞句同な形容詞嘅否定形，<b>い形容詞唔可以咁樣否定</b>，記住呢個陷阱。'},
+{id:'8-3',lesson:8,type:'mc',point:'い形容詞＋名詞',s:'富士山は＿＿山です。',opts:['たかい','たかな','たかの','たかく'],a:0,full:'富士山は たかい 山です。',zh:'富士山係一座高山。',exp:'い形容詞修飾名詞時<b>直接用「〜い」原形放名詞前面</b>：たかい山、おもしろい本。な形容詞先要用「な」（静かな町），唔好撈亂。'},
+{id:'8-4',lesson:8,type:'mc',point:'な形容詞＋名詞',s:'ワット先生は＿＿先生です。',opts:['しんせつな','しんせつ','しんせつい','しんせつの'],a:0,full:'ワット先生は しんせつな 先生です。',zh:'瓦特老師係一位好和氣嘅老師。',exp:'な形容詞修飾名詞時要<b>保留「な」</b>：しんせつな先生、にぎやか町…唔啱，係「にぎやかな町」。做謂語嗰陣先會去咗「な」（しんせつです），做修飾語就要留返。'},
+{id:'8-5',lesson:8,type:'mc',point:'どんな',s:'「奈良は＿＿町ですか。」「古い町です。」',opts:['どんな','どう','どちら','どこ'],a:0,full:'奈良は どんな 町ですか。',zh:'奈良係一個點樣嘅城市？——係個古城。',exp:'<b>「どんな」</b>係詢問人或物嘅狀態、性質嘅疑問詞，修飾名詞（どんな＋名詞）。答嘅人會用形容詞修飾名詞嚟答（古い町）。「どう」要配合「〜はどうですか」句型；「どちら」「どこ」問地方，唔問性質。'},
+{id:'8-6',lesson:8,type:'mc',point:'いい→よくないです',s:'「この 映画は どうですか。」「あまり＿＿。」',opts:['よくないです','いくないです','いいじゃありません','よかったです'],a:0,full:'……あまり よくないです。',zh:'——唔係幾好睇。',exp:'<b>「いいです」嘅否定形係「よくないです」</b>，「いい」係「よい」嘅變體，否定時變返「よ」＋「くないです」。絕對冇「いくないです」呢個講法，「じゃありません」亦唔可以否定い形容詞。仲要留意「あまり」一定要配否定形。'},
+{id:'8-7',lesson:8,type:'mc',point:'あまり＋否定',s:'ペキンは＿＿寒くないです。',opts:['あまり','とても','少し','どう'],a:0,full:'ペキンは あまり 寒くないです。',zh:'北京唔係太凍。',exp:'<b>「あまり」一定要同否定形一齊用</b>，表示「唔太〜」：あまり寒くないです、あまり有名じゃありません。「とても」（非常）同「少し」（少少）都配肯定形；「どう」係「〜はどうですか」句型用嘅，唔可以放喺形容詞前面。'},
+{id:'8-8',lesson:8,type:'order',point:'い形容詞＋名詞',lead:'富士山は',box:['たかい','です','山','とても'],star:2,a:2,full:'富士山は とても たかい 山です。',zh:'富士山係一座好高嘅山。',exp:'成句順序：富士山は（とても）（たかい）（山）（です）——副詞「とても」修飾い形容詞「たかい」，形容詞「たかい」修飾名詞「山」，最後「です」。<b>★「山」係第3個位</b>。'},
+/* ---------- 第9課 ---------- */
+{id:'9-1',lesson:9,type:'mc',point:'〜が好きです',s:'わたしは イタリア料理＿＿好きです。',opts:['が','を','と','へ'],a:0,full:'わたしは イタリア料理が 好きです。',zh:'我鍾意意大利菜。',exp:'<b>形容詞（好きです／嫌いです／上手です／下手です）同「分かります」「あります」嘅賓語用「が」表示</b>，唔用「を」。呢個係第9課最重要嘅助詞轉換。「と」「へ」都唔可以標示喜好嘅對象。'},
+{id:'9-2',lesson:9,type:'mc',point:'〜があります',s:'わたしは 車＿＿あります。',opts:['が','を','に','で'],a:0,full:'わたしは 車が あります。',zh:'我有車。',exp:'表示「擁有」嘅「あります」同樣<b>用「が」標示對象</b>：お金があります、時間があります。同第6課動作對象嘅「を」唔同，鍾意、有、明白呢啲都係「が」。「に」「で」都唔可以表示擁有嘅對象。'},
+{id:'9-3',lesson:9,type:'mc',point:'全然＋否定',s:'お金が 全然＿＿。',opts:['あります','ありません','じゃありません','でした'],a:1,full:'お金が 全然 ありません。',zh:'完全冇錢（一蚊都冇）。',exp:'<b>「全然」（ぜんぜん）同「あまり」一樣，一定要配否定形</b>，表示「完全唔〜」：全然わかりません、全然おもしろくないです。配肯定形「あります」係錯嘅。'},
+{id:'9-4',lesson:9,type:'mc',point:'〜から（理由）',s:'「どうして 朝 新聞を読みませんか。」「時間が＿＿。」',opts:['ありませんから','ありますから','ありませんの','ありませんか'],a:0,full:'……時間が ありませんから。',zh:'——因為冇時間。',exp:'答「どうして」（點解）嘅時候，句尾加<b>「から」表示理由</b>。「ありますから」＝「因為有時間」，同「唔睇報紙」意思矛盾；「ありませんの」「ありませんか」都唔係陳述理由嘅正確形式。補充理由時仲可以淨講「〜から。」。'},
+{id:'9-5',lesson:9,type:'mc',point:'少し',ctx:'語境：我只係識少少日語。',s:'日本語が＿＿分かります。',opts:['少し','よく','たくさん','あまり'],a:0,full:'日本語が 少し 分かります。',zh:'日語識少少（有少少程度明白）。',exp:'<b>「少し」＝一啲啲</b>，配肯定形。表示程度嘅副詞放喺要修飾嘅動詞前面：「よく分かります」＝好明白、「少し分かります」＝識少少、「あまり／全然」就要配否定形。「よく分かります」文法上啱，但同語境「只係識少少」唔夾。'},
+{id:'9-6',lesson:9,type:'mc',point:'どうして',s:'「＿＿朝 新聞を読みませんか。」',opts:['どうして','いつ','どこ','なに'],a:0,full:'どうして 朝 新聞を読みませんか。',zh:'點解朝早唔睇報紙？',exp:'<b>「どうして」係問原因嘅疑問詞</b>。回答嘅時候喺答語句尾接「から」表示理由。「いつ」問時間、「どこ」問地方、「なに」問嘢，都唔係問原因。'},
+{id:'9-7',lesson:9,type:'mc',point:'〜ですから（句尾理由）',s:'「きょうは 早く 帰ります。」「どうしてですか。」「子どもの 誕生日＿＿。」',opts:['ですから','からです','でした','ですね'],a:0,full:'……子どもの 誕生日ですから。',zh:'——因為係仔女嘅生日。',exp:'名詞句講理由嗰陣，「から」直接接喺<b>「です」後面</b>：〜ですから。<b>「からです」係錯序</b>——「から」係表示「前面係原因」，唔係「後面加から」。對方淨係問原因時，可以反問「どうしてですか」。'},
+{id:'9-8',lesson:9,type:'order',point:'〜から（理由）',lead:'',box:['読みません','時間が','ありませんから','新聞を'],star:2,a:1,full:'時間が ありませんから、新聞を 読みません。',zh:'因為冇時間，所以唔睇報紙。',exp:'成句順序：（時間が）（ありませんから）（新聞を）（読みません）——<b>理由句「〜から」喺前半</b>，結果喺後半。<b>★「ありませんから」係第2個位</b>。'}
+);
+/* ===== 加強題庫：N5 網上公開練習精選（第10–12組） ===== */
+/* 來源：Practice JLPT《N5 Grammar Test 1》、The Japanese Page《Free JLPT N5 Practice Test》、JLPT 官方問題例；
+   全部經唯一答案覆核，解釋以繁體中文（廣東話）撰寫。 */
+const SRC_PJ = '出處：Practice JLPT《N5 Grammar Test 1》公開練習題';
+const SRC_JP = '出處：The Japanese Page《Free JLPT N5 Practice Test》';
+const SRC_OFF = '出處：JLPT 官方問題例（N5 言語知識・文法）';
+const SRC_OWN = '出處：編者自設補充題（N5 程度）';
+QUESTIONS.push(
+/* 加強①：助詞總複習 */
+{id:'10-1',lesson:10,type:'mc',point:'で（交通手段）',s:'私は あしたの ひこうき＿＿国へ 帰ります。',opts:['で','を','か','に'],a:0,full:'私は あしたの ひこうきで 国へ 帰ります。',zh:'我聽日搭飛機返祖國。',exp:'「ひこうき」（飛機）係交通手段，用<b>「で」</b>；目的地已經用「国へ」表示。「を」可以標示離開嘅地方（家を出ます），但唔係手段；「に」係目的地，同「へ」重複唔啱。',srcFull:SRC_PJ},
+{id:'10-2',lesson:10,type:'mc',point:'や（舉例列舉）',s:'先週 デパートで かばん＿＿くつなどを 買いました。',opts:['や','は','も','へ'],a:0,full:'先週 デパートで かばんや くつなどを 買いました。',zh:'上星期喺百貨公司買咗手袋、鞋之類嘅嘢。',exp:'<b>「や」用於非完全列舉（舉例）</b>，通常配「など」（之類）：かばんやくつなど＝手袋、鞋等等。第4課嘅「と」係完全列舉（得嗰兩樣），意思唔同。「は」「も」「へ」都唔可以連接名詞做列舉。',srcFull:SRC_PJ},
+{id:'10-3',lesson:10,type:'mc',point:'を（離開地點）',s:'私は 毎朝 7時ごろ 家＿＿出ます。',opts:['を','に','が','と'],a:0,full:'私は 毎朝 7時ごろ 家を 出ます。',zh:'我每日朝早大約七點離開屋企。',exp:'<b>「出ます」（離開）嘅出發地用「を」</b>：家を出ます、部屋を出ます。注意同「行きます」唔同——去邊度用「に／へ」，離開邊度用「を」。「7時ごろ」係「大約七點」。',srcFull:SRC_PJ},
+{id:'10-4',lesson:10,type:'mc',point:'〜に会います',s:'きのう スーパーで 田中さん＿＿会いました。',opts:['に','の','を','で'],a:0,full:'きのう スーパーで 田中さんに 会いました。',zh:'噚日喺超級市場見到田中。',exp:'<b>「〜に会います」係固定配搭</b>，會面對象用「に」：友だちに会います、先生に会います。「スーパーで」已經標示咗動作場所，所以唔可以再用「で」；「を」係動作對象，但「会います」嘅對象要用「に」。',srcFull:SRC_PJ},
+{id:'10-5',lesson:10,type:'mc',point:'が（動作者）',s:'私の うちの ほんだなは、きょねん 父＿＿作りました。',opts:['が','を','で','や'],a:0,full:'私の うちの ほんだなは、きょねん 父が 作りました。',zh:'我屋企個書櫃，係舊年爸爸整嘅。',exp:'主題係「ほんだなは」（書櫃），講「邊個整」就用<b>「が」標示動作者</b>：父が作りました。「を」會令爸爸變成被整嘅對象，意思錯晒；「で」「や」放喺人名後面唔成立。',srcFull:SRC_PJ},
+{id:'10-6',lesson:10,type:'mc',point:'に（存在地點）',s:'つくえの うえ＿＿ほんが あります。',opts:['に','へ','で','を'],a:0,full:'つくえの うえに ほんが あります。',zh:'枱上面有書。',exp:'<b>「あります／います」表示存在，地點用「に」</b>：つくえのうえに本があります。「で」係動作進行嘅場所（第6課），但「あります」唔係動作，所以用「に」。',srcFull:SRC_JP},
+{id:'10-7',lesson:10,type:'mc',point:'より（比較）',s:'この りんごは あの りんご＿＿おおきいです。',opts:['より','まで','ほど','から'],a:0,full:'この りんごは あの りんごより おおきいです。',zh:'呢個蘋果比嗰個大。',exp:'<b>「AはBより〜」＝A比B更〜</b>，係比較句型。「ほど」要配否定先啱（あのりんごほどおおきくないです），呢句係肯定，所以唔得；「まで」「から」係起訖，唔係比較。',srcFull:SRC_JP},
+{id:'10-8',lesson:10,type:'mc',point:'〜といっしょに',s:'きのう ともだち＿＿いっしょに えいがを みました。',opts:['と','へ','を','で'],a:0,full:'きのう ともだちと いっしょに えいがを みました。',zh:'噚日同朋友一齊睇咗戲。',exp:'<b>「〜といっしょに」＝同某人一齊</b>，「と」表示同伴（第5課），加「いっしょに」加強「一齊」嘅意思。「へ」係方向、「を」係動作對象、「で」係手段／場所，都唔可以表示同伴。',srcFull:SRC_JP},
+/* 加強②：動詞形・句型 */
+{id:'11-1',lesson:11,type:'mc',point:'〜てもいいですか（許可）',s:'すみません、この ペンを＿＿も いいですか。',opts:['つかって','つかわない','つかう','つかった'],a:0,full:'すみません、この ペンを つかっても いいですか。',zh:'唔該，可唔可以用呢支筆？',exp:'<b>「て形＋もいいですか」＝可唔可以…？</b>係請求許可嘅句型：つかってもいいですか＝可唔可以用？「つかわないも」「つかうも」「つかったも」都唔成立。',srcFull:SRC_JP},
+{id:'11-2',lesson:11,type:'mc',point:'〜たあとで（先後）',s:'へやを＿＿あとで、でかけます。',opts:['そうじする','そうじした','そうじしない','そうじして'],a:1,full:'へやを そうじした あとで、でかけます。',zh:'執拾完房之後出街。',exp:'<b>「た形＋あとで」＝做完…之後</b>：そうじしたあとで＝打掃完之後。「する」（辭書形）要配「まえに」（做之前）先啱；「しない」「して」都唔可以接「あとで」。',srcFull:SRC_JP},
+{id:'11-3',lesson:11,type:'mc',point:'まだです（仲未）',s:'「ケンさん、大学の じゅぎょうは 始まりましたか。」「いいえ、＿＿です。来週 始まります。」',opts:['まだ','もう','とても','あまり'],a:0,full:'……いいえ、まだです。来週 始まります。',zh:'——仲未，下星期先開始。',exp:'<b>「まだです」＝仲未</b>，配後面「来週始まります」（下星期先開始）先合理。「もうです」意思相反；「とても」「あまり」係程度副詞，唔可以咁樣獨立回答。第7課學咗「もう」，呢度要分清「もう」同「まだ」。',srcFull:SRC_OFF},
+{id:'11-4',lesson:11,type:'mc',point:'〜てください＋つける',s:'へやが くらいですね。でんきを＿＿ください。',opts:['きて','はいて','かけて','つけて'],a:3,full:'へやが くらいですね。でんきを つけて ください。',zh:'房好暗喎，唔該開燈。',exp:'<b>「でんきをつける」＝開燈</b>；「て形＋ください」係請求別人做嘢。「きる」着上身衫、「はく」着鞋褲、「かける」戴眼鏡／打電話，都唔配「でんき」（電燈）。',srcFull:SRC_JP},
+{id:'11-5',lesson:11,type:'mc',point:'〜てから＋みがく',s:'毎朝、はを＿＿から、あさごはんを たべます。',opts:['きって','あらって','みがいて','あびて'],a:2,full:'毎朝、はを みがいてから、あさごはんを たべます。',zh:'每日朝早刷完牙先食早餐。',exp:'<b>「はをみがく」＝刷牙</b>；「て形＋から」表示「做完…先至…」。「あらう」洗手／面、「あびる」沖花灑浴、「きる」剪，都唔配「は」（牙）。',srcFull:SRC_JP},
+{id:'11-6',lesson:11,type:'mc',point:'形容詞對比（せまい→ひろい）',s:'わたしの へやは せまいですが、あねの へやは＿＿です。',opts:['ひろい','おもい','ながい','たかい'],a:0,full:'わたしの へやは せまいですが、あねの へやは ひろいです。',zh:'我間房好窄，但家姐間房好闊。',exp:'「ですが」係轉折（但係），後半句要同「せまい」（窄）相反，即係<b>「ひろい」（闊）</b>。「おもい」重、「ながい」長、「たかい」高／貴，都唔係「せまい」嘅相反詞。',srcFull:SRC_JP},
+{id:'11-7',lesson:11,type:'mc',point:'あめがふる＋て形連接',s:'きのうは あめが＿＿、とても さむかったです。',opts:['ふいて','ふって','なって','でて'],a:1,full:'きのうは あめが ふって、とても さむかったです。',zh:'噚日落雨，非常之凍。',exp:'<b>「あめがふる」＝落雨</b>，呢度用て形連接後半句。「ふく」（吹）係配「かぜ」（風）；「なる」變成、「でる」出去，意思都唔啱。',srcFull:SRC_JP},
+{id:'11-8',lesson:11,type:'mc',point:'同義句（じょうずじゃありません→へた）',s:'「わたしは りょうりが じょうずじゃ ありません。」と 同じ意味の文は どれですか。',opts:['わたしは りょうりが へたです。','わたしは りょうりが きらいです。','わたしは りょうりが じょうずです。','わたしは りょうりが すきです。'],a:0,full:'わたしは りょうりが へたです。',zh:'我唔擅長煮嘢食。',exp:'<b>「じょうずじゃありません」（唔擅長）＝「へたです」（唔叻）</b>。「きらい」係「唔鍾意」、「すき」係「鍾意」，講嘅係喜好唔係能力（第9課）；「じょうずです」意思相反。',srcFull:SRC_JP},
+/* 加強③：排序＋綜合 */
+{id:'12-1',lesson:12,type:'order',point:'〜を〜に曲がる＋てください',lead:'すみません、つぎの',box:['しんごうを','右','に','まがってください'],star:1,a:1,full:'すみません、つぎの しんごうを 右に まがってください。',zh:'唔該，喺下一個紅綠燈轉右。',exp:'成句順序：つぎの（しんごうを）（右）（に）（まがってください）——<b>「〜を右に曲がる」係固定配搭</b>：轉彎嘅地點用「を」、方向用「に」，「右」同「に」一定要黐埋。<b>★「右」係第2個位</b>。',srcFull:SRC_PJ},
+{id:'12-2',lesson:12,type:'order',point:'の連接＋といっしょに',lead:'私は 日曜日に',box:['兄の','子どもと','いっしょに','出かけました'],star:1,a:1,full:'私は 日曜日に 兄の 子どもと いっしょに 出かけました。',zh:'我星期日同哥哥個仔一齊出咗街。',exp:'成句順序：（兄の）（子どもと）（いっしょに）（出かけました）——「の」連接「兄」同「子ども」（哥哥嘅小朋友），「と」標示同伴，「いっしょに」放動詞前面。<b>★「子どもと」係第2個位</b>。',srcFull:SRC_PJ},
+{id:'12-3',lesson:12,type:'order',point:'て形連接＋色がきれい',lead:'きのう 買った おかしは',box:['まるくて','色が','きれい','でした'],star:1,a:1,full:'きのう 買った おかしは まるくて 色が きれいでした。',zh:'噚日買嘅糖果圓圓哋，顏色好靚。',exp:'成句順序：（まるくて）（色が）（きれい）（でした）——い形容詞て形「まるくて」連接兩個描述；「きれいでした」係な形容詞過去，「色が」係被描述嘅部分，「きれい」同「でした」要黐埋。<b>★「色が」係第2個位</b>。',srcFull:SRC_PJ},
+{id:'12-4',lesson:12,type:'order',point:'あの＋い形＋名詞',lead:'',box:['白い','かばんは','あの','わたしのです'],star:1,a:2,full:'あの 白い かばんは わたしのです。',zh:'嗰個白色手袋係我嘅。',exp:'成句順序：（あの）（白い）（かばんは）（わたしのです）——「あの」放最前，い形容詞「白い」直接修飾名詞「かばん」（第8課），「わたしのです」用「の」代替名詞（第2課）。<b>★「かばんは」係第3個位</b>。',srcFull:SRC_OWN},
+{id:'12-5',lesson:12,type:'mc',point:'おととい＝ふつかまえ',s:'「おととい デパートに いきました。」の「おととい」と 同じ意味は どれですか。',opts:['ふつかまえ','みっかまえ','きのう','あした'],a:0,full:'おととい＝ふつかまえ',zh:'「おととい」即係兩日前。',exp:'<b>「おととい」＝前日，即係「ふつかまえ」（兩日前）</b>。「みっかまえ」三日前、「きのう」噚日（一日前）、「あした」聽日，都唔同。',srcFull:SRC_JP},
+{id:'12-6',lesson:12,type:'mc',point:'同義句（やすくない→たかい）',s:'「この みせは やすくないです。」と 同じ意味の文は どれですか。',opts:['この みせは たかいです。','この みせは やすいです。','この みせは ちいさいです。','この みせは あたらしいです。'],a:0,full:'この みせは たかいです。',zh:'呢間舖頭好貴。',exp:'<b>「やすくない」（唔平）＝「たかい」（貴）</b>，い形容詞否定形（第8課）。「やすい」意思相反；「ちいさい」細、「あたらしい」新，都同價錢無關。',srcFull:SRC_JP},
+{id:'12-7',lesson:12,type:'mc',point:'ほど（配否定）',s:'この りんごは あの りんご＿＿おおきくないです。',opts:['ほど','より','まで','から'],a:0,full:'この りんごは あの りんごほど おおきくないです。',zh:'呢個蘋果冇嗰個咁大。',exp:'<b>「AはBほど〜くない」＝A冇B咁〜</b>，「ほど」一定要配否定形。「より」配肯定（A比B更〜，見加強①），同「おおきくない」唔夾；「まで」「から」係起訖。',srcFull:SRC_OWN},
+{id:'12-8',lesson:12,type:'mc',point:'〜ています（進行中）',s:'今、雨が 降って＿＿。',opts:['います','あります','いました','ありました'],a:0,full:'今、雨が 降っています。',zh:'而家落緊雨。',exp:'<b>「て形＋います」表示動作進行中</b>：降っています＝落緊雨。「今」（而家）配現在式，所以唔係過去嘅「いました」；「あります」唔可以接動詞て形。',srcFull:SRC_OWN}
+);
+/*QDATA_L7_L9 結束*/
+
+/* =========================================================
+   App 狀態同邏輯
+   ========================================================= */
+const state = {
+  mode:null,        // 'lesson' | 'mock'
+  lesson:0,
+  list:[],           // 本輪題目
+  idx:0,
+  answers:[],        // 用戶答案索引（0-3）
+  correct:0,
+  answered:false,
+  timerId:null,
+  timerLeft:0,
+  mockLen:20,
+  mockMin:15
+};
+
+const $ = id => document.getElementById(id);
+
+function go(view){
+  ['viewHome','viewQuiz','viewResult'].forEach(v => $(v).classList.add('hidden'));
+  $('btnHome').classList.toggle('hidden', view==='home');
+  $(view==='home'?'viewHome':view==='quiz'?'viewQuiz':'viewResult').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* ---------- 首頁 ---------- */
+function renderHome(){
+  const grid = $('lessonGrid');
+  grid.innerHTML = '';
+  Object.keys(LESSONS).forEach(n=>{
+    const L = LESSONS[n];
+    const qs = QUESTIONS.filter(q=>q.lesson===Number(n));
+    const best = getBest(n);
+    const card = document.createElement('button');
+    card.className = 'lesson-card';
+    card.onclick = ()=>startLesson(Number(n));
+    card.innerHTML =
+      '<div class="lc-head"><span class="lc-no">'+lessonLabel(n)+'</span><span class="lc-theme">'+L.theme+'</span></div>'+
+      '<div class="lc-pts">'+L.pts.map(p=>'<span class="lc-pts">'+p+'</span>').join('・')+'</div>'+
+      '<div class="lc-meta"><span>'+qs.length+' 題</span>'+
+      (best!==null?'<span class="lc-best">最高 '+best+' 題</span>':'<span>未做過</span>')+
+      '</div>';
+    grid.appendChild(card);
+  });
+}
+
+function getBest(n){
+  try{
+    const v = localStorage.getItem('jlptn5best_'+n);
+    return v===null?null:Number(v);
+  }catch(e){ return null; }
+}
+function setBest(n,val){
+  try{
+    const cur = getBest(n);
+    if(cur===null || val>cur) localStorage.setItem('jlptn5best_'+n, String(val));
+  }catch(e){}
+}
+
+/* ---------- 開始測驗 ---------- */
+function startLesson(n){
+  state.mode='lesson'; state.lesson=n;
+  state.list = shuffle(QUESTIONS.filter(q=>q.lesson===n));
+  begin(lessonLabel(n)+' 操練');
+}
+function startMock(){
+  state.mode='mock'; state.lesson=0;
+  state.list = shuffle(QUESTIONS).slice(0, state.mockLen);
+  begin('混合模擬試卷');
+  state.timerLeft = state.mockMin*60;
+  $('quizTimer').classList.remove('hidden');
+  $('quizTimer').classList.remove('overtime');
+  $('quizTimer').textContent = fmtTime(state.timerLeft);
+  state.timerId = setInterval(()=>{
+    state.timerLeft--;
+    if(state.timerLeft<=0){
+      state.timerLeft=0;
+      $('quizTimer').classList.add('overtime');
+      $('quizTimer').textContent = '時間到';
+      clearInterval(state.timerId);
+      if(!state.answered) showToast('時間到，盡快完成剩低嘅題目');
+    }else{
+      $('quizTimer').textContent = fmtTime(state.timerLeft);
+    }
+  },1000);
+}
+function begin(modeLabel){
+  state.idx=0; state.answers=[]; state.correct=0; state.answered=false;
+  clearInterval(state.timerId);
+  if(state.mode!=='mock') $('quizTimer').classList.add('hidden');
+  $('quizMode').textContent = modeLabel;
+  go('quiz');
+  showQ();
+}
+function retry(){
+  if(state.mode==='mock') startMock();
+  else startLesson(state.lesson);
+}
+
+/* ---------- 顯示題目 ---------- */
+function fmtTime(s){
+  const m=Math.floor(s/60), r=s%60;
+  return m+':'+(r<10?'0':'')+r;
+}
+function showQ(){
+  state.answered=false;
+  const q = state.list[state.idx];
+  $('quizProg').textContent = '第 '+(state.idx+1)+' 題 / 全 '+state.list.length+' 題';
+  $('progFill').style.width = (state.idx/state.list.length*100)+'%';
+  $('qTag').textContent = lessonLabel(q.lesson)+'・'+q.point;
+  $('qInst').textContent = q.type==='mc'
+    ? '（　）に入れる最もよいものを、下の①〜④から一つ選びなさい。'
+    : '正しい順番はどれですか。★の言葉はどこに入りますか。';
+  $('btnNext').classList.add('hidden');
+  $('btnNext').textContent = state.idx===state.list.length-1 ? '睇結果' : '下一題';
+  $('qFeedbackLine').textContent='';
+  $('explainArea').innerHTML='';
+
+  if(q.type==='mc'){
+    $('qBody').innerHTML = '<div class="q-text">'+q.s.replace('＿＿','<span style="border-bottom:2px solid #26221e;display:inline-block;min-width:56px">&nbsp;</span>')+(q.ctx?'':'')+'</div>'+
+      (q.ctx?'<div class="q-hint">'+q.ctx+'</div>':'');
+    renderOptions(q.opts.map(o=>({body:o})), q);
+  }else{
+    /* 排序題：skeleton ＋生字箱 */
+    const lead = q.lead ? '<span>'+q.lead+'</span>' : '';
+    let sk = lead;
+    for(let i=1;i<=4;i++){
+      sk += '<span class="slot">'+i+'</span> ';
+    }
+    if(q.tail) sk += '<span>'+q.tail+'</span>';
+    const boxWords = q.box.map((w,i)=> i===q.star
+      ? '<span class="w"><span class="star-mark">★</span><span>'+w+'</span></span>'
+      : '<span class="w">'+w+'</span>');
+    $('qBody').innerHTML =
+      '<div class="order-skeleton">'+sk+'</div>'+
+      '<div class="order-box">'+boxWords.join('')+'</div>'+
+      (q.ctx?'<div class="q-hint" style="margin-top:10px">'+q.ctx+'</div>':'');
+    renderOptions([{body:'1'},{body:'2'},{body:'3'},{body:'4'}], q, true);
+  }
+}
+
+function renderOptions(optList, q, isOrder){
+  const area = $('optArea');
+  area.innerHTML='';
+  area.className='opt-list';
+  optList.forEach((o,i)=>{
+    const b = document.createElement('button');
+    b.className='opt';
+    if(isOrder){
+      b.innerHTML = '<span class="num" style="width:34px;height:34px;font-size:16px">'+(i+1)+'</span><span class="opt-body">填入上面第 <b style="color:#d9333f">'+(i+1)+'</b> 個空位</span>';
+    }else{
+      b.innerHTML = '<span class="num">'+'①②③④'[i]+'</span><span class="opt-body">'+o.body+'</span>';
+    }
+    b.onclick = ()=>answer(i,q);
+    area.appendChild(b);
+  });
+}
+
+function answer(i,q){
+  if(state.answered) return;
+  state.answered=true;
+  state.answers[state.idx]=i;
+  const isOk = (i===q.a);
+  if(isOk) state.correct++;
+  const opts = $('optArea').querySelectorAll('.opt');
+  opts.forEach((el,j)=>{
+    el.classList.add('locked');
+    if(j===q.a) el.classList.add('correct');
+    if(j===i && !isOk) el.classList.add('wrong');
+  });
+
+  /* 解說 */
+  let exp = '<div class="explain">';
+  exp += '<div class="verdict '+(isOk?'ok':'ng')+'">'+(isOk?'◯ 正解':'✕ 不正解')+'</div>';
+  exp += '<span class="exp-grammar">'+q.point+'</span>';
+  exp += '<div class="exp-full"><span class="jp">'+q.full+'</span><span class="zh">'+q.zh+'</span></div>';
+  exp += '<div class="exp-body">'+q.exp+'</div>';
+  exp += '<div class="exp-src">'+(q.srcFull || ('出處：《大家的日本語 初級1（第二版）》第'+q.lesson+'課 文法'+(q.src||'')))+'</div>';
+  exp += '</div>';
+  $('explainArea').innerHTML = exp;
+  $('btnNext').classList.remove('hidden');
+  $('qFeedbackLine').textContent = '';
+}
+
+function nextQ(){
+  if(state.idx >= state.list.length-1){
+    finish();
+  }else{
+    state.idx++;
+    showQ();
+  }
+}
+
+/* ---------- 結果 ---------- */
+function finish(){
+  clearInterval(state.timerId);
+  const total = state.list.length;
+  const pct = Math.round(state.correct/total*100);
+  const pass = pct>=70;
+  $('rsScore').innerHTML = state.correct+'<small> / '+total+'</small>';
+  $('rsDetail').textContent = '正答率 '+pct+'%';
+  const v=$('rsVerdict');
+  v.textContent = pass?'合格！繼續保持':'未達 70%，睇返錯咗嗰啲題目嘅解釋再試';
+  v.className='rs-verdict-line '+(pass?'pass':'fail');
+  if(state.mode==='lesson') setBest(state.lesson, state.correct);
+
+  $('rsSummary').textContent = '答錯咗嘅題目留喺上面，解釋喺每題下面';
+  const list = $('reviewList');
+  list.innerHTML='';
+  state.list.forEach((q,i)=>{
+    const ua = state.answers[i];
+    const ok = ua===q.a;
+    const item = document.createElement('div');
+    item.className='review-item';
+    let qText;
+    if(q.type==='mc'){
+      qText = '<span>'+(q.lead||'')+q.s+'</span>';
+    }else{
+      qText = '<span>'+(q.lead||'')+'＿ ＿ ＿ ＿'+(q.tail||'')+'　（★'+q.box[q.star]+'）</span>';
+    }
+    let ansLine;
+    if(q.type==='mc'){
+      ansLine = '你揀咗 <span class="yours '+(ok?'ok':'ng')+'">'+q.opts[ua]+'</span>　正解 <b>'+q.opts[q.a]+'</b>';
+    }else{
+      ansLine = '你揀咗位置 <span class="yours '+(ok?'ok':'ng')+'">'+(ua+1)+'</span>　正解係位置 <b>'+(q.a+1)+'</b>（'+q.full+'）';
+    }
+    item.innerHTML =
+      '<div class="ri-head"><span class="ri-badge '+(ok?'ok':'ng')+'">'+(ok?'◯ 正解':'✕ 錯咗')+'</span>'+
+      '<span class="ri-src">'+lessonLabel(q.lesson)+'・'+q.point+'</span></div>'+
+      '<div class="ri-q">'+qText+'</div>'+
+      '<div class="ri-answer">'+ansLine+'</div>'+
+      (ok?'':'<div class="ri-exp">'+q.exp+'</div>');
+    list.appendChild(item);
+  });
+  go('result');
+}
+
+function showToast(msg){
+  const t=$('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ---------- 啟動 ---------- */
+renderHome();
+go('home');
+</script>
+</body>
+</html>
