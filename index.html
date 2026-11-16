@@ -168,3 +168,455 @@
   .order-skeleton .slot{
     display:inline-block;min-width:52px;border-bottom:2px solid var(--ink);
     text-align:center;color:var(--ink-soft);font-size:14px;font-weight:700;
+    padding:0 4px;margin:0 2px;
+  }
+  .order-box{
+    margin-top:14px;border:1px dashed var(--ink-soft);border-radius:10px;
+    padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;
+    font-family:var(--serif);font-size:17px;
+  }
+  .order-box .w{display:inline-flex;gap:2px;}
+  .order-box .star-mark{color:var(--accent);font-weight:700;}
+  /* 解說 */
+  .explain{
+    margin-top:16px;border-top:1px solid var(--line);padding-top:14px;
+  }
+  .verdict{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;margin-bottom:10px;}
+  .verdict.ok{color:var(--ok);}
+  .verdict.ng{color:var(--ng);}
+  .exp-grammar{
+    display:inline-block;background:#fff8e6;border:1px solid #eadfa8;color:#7a5b12;
+    font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-bottom:8px;
+  }
+  .exp-full{font-size:14px;margin-bottom:8px;}
+  .exp-full .jp{font-family:var(--serif);font-size:16px;line-height:1.8;display:block;}
+  .exp-full .zh{color:var(--ink-soft);font-size:13px;display:block;}
+  .exp-body{font-size:14px;line-height:1.85;color:var(--ink);}
+  .exp-body b{color:var(--accent-deep);}
+  .exp-src{margin-top:10px;font-size:12px;color:var(--ink-soft);}
+  .q-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;}
+  .btn-next{background:var(--navy);color:#fff;font-size:14px;padding:11px 24px;box-shadow:0 2px 6px rgba(31,58,95,.25);}
+  .btn-next:hover{background:#16304f;}
+  /* ===== 結果頁 ===== */
+  .result-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:24px 20px 20px;text-align:center;margin-bottom:22px;
+  }
+  .rs-score{font-size:44px;font-weight:800;color:var(--accent);line-height:1.1;font-variant-numeric:tabular-nums;}
+  .rs-score small{font-size:16px;font-weight:700;color:var(--ink-soft);}
+  .rs-detail{font-size:14px;color:var(--ink-soft);margin-top:8px;}
+  .rs-verdict-line{font-size:15px;margin-top:10px;font-weight:700;}
+  .rs-verdict-line.pass{color:var(--ok);}
+  .rs-verdict-line.fail{color:var(--ng);}
+  .rs-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+  .review-item{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;
+  }
+  .review-item.ok{border-left:none;}
+  .ri-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+  .ri-badge{font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;}
+  .ri-badge.ok{background:var(--ok-bg);color:var(--ok);}
+  .ri-badge.ng{background:var(--ng-bg);color:var(--ng);}
+  .ri-src{font-size:11px;color:var(--ink-soft);margin-left:auto;}
+  .ri-q{font-family:var(--serif);font-size:16px;line-height:1.8;margin-bottom:8px;}
+  .ri-q .blank{border-bottom:2px solid var(--ink);min-width:40px;display:inline-block;}
+  .ri-answer{font-size:13.5px;margin-bottom:6px;line-height:1.7;}
+  .ri-answer .yours{font-weight:700;}
+  .ri-answer .yours.ng{color:var(--ng);}
+  .ri-answer .yours.ok{color:var(--ok);}
+  .ri-exp{font-size:13.5px;color:var(--ink);line-height:1.8;}
+  .ri-exp .jp{font-family:var(--serif);}
+  .hidden{display:none !important;}
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+    background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:50;
+  }
+  .toast.show{opacity:.92;}
+  footer{margin-top:40px;font-size:12px;color:var(--ink-soft);text-align:center;}
+  @media(max-width:520px){
+    h1.page-tt{font-size:22px;}
+    .q-text,.order-skeleton{font-size:18px;}
+    .wrap{padding:12px 14px 56px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 頂部 ===== -->
+  <div class="nav-top">
+    <div class="brand">
+      <div class="brand-mark">文</div>
+      <div>
+        <div class="brand-tt">JLPT N5 文法操練</div>
+        <div class="brand-sub">《大家的日本語》初級1（第二版）第1–9課＋N5加強題庫</div>
+      </div>
+    </div>
+    <button class="home-link hidden" id="btnHome" onclick="go('home')">回到首頁</button>
+  </div>
+
+  <!-- ===== 檢視：首頁 ===== -->
+  <section id="viewHome">
+    <div class="exam-tag">MOCK EXAM</div>
+    <h1 class="page-tt">日語文法模擬試題 <span class="n5">N5</span></h1>
+    <p class="lede">根據教材第 1–9 課文法重點編寫，再加 24 題 N5 公開練習精選（官方問題例及網上題庫），共 87 題。每題作答後即時批改，並附詳盡解釋同出處。</p>
+
+    <div class="mock-entry">
+      <div class="row">
+        <div>
+          <h2>混合模擬試卷</h2>
+          <p>由全部 87 題題庫隨機抽 20 題，計時 15 分鐘，交卷後先至睇到答案同解釋，貼近實戰。</p>
+        </div>
+        <button class="btn btn-primary" onclick="startMock()" id="btnStartMock" disabled>載入題庫中...</button>
+      </div>
+    </div>
+
+    <div class="sec-tt">
+      <h2>按課操練</h2>
+      <span>即時批改・每題附解釋</span>
+    </div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+
+    <p class="src-note">出題範圍同解釋根據《大家的日本語 初級1（第二版）》第 1–9 課「文型・文法」內容編寫。每課文法要點列喺課程卡片下面，操練之前可以先重溫。加強題庫（加強①–③）改編自 JLPT 官方問題例、Practice JLPT 及 The Japanese Page 嘅公開練習，同樣附答案解釋。</p>
+  </section>
+
+  <!-- ===== 檢視：測驗 ===== -->
+  <section id="viewQuiz" class="hidden">
+    <div class="quiz-head">
+      <span class="quiz-mode" id="quizMode"></span>
+      <span class="quiz-prog" id="quizProg"></span>
+      <span class="timer hidden" id="quizTimer"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+
+    <div class="q-card">
+      <div class="q-tag" id="qTag"></div>
+      <div class="q-inst" id="qInst"></div>
+      <div id="qBody"></div>
+      <div id="optArea"></div>
+      <div id="explainArea"></div>
+      <div class="q-actions">
+        <span class="q-hint" id="qFeedbackLine"></span>
+        <button class="btn btn-next hidden" id="btnNext" onclick="nextQ()">下一題</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 檢視：結果 ===== -->
+  <section id="viewResult" class="hidden">
+    <div class="result-card">
+      <div class="exam-tag">RESULT</div>
+      <div class="rs-score" id="rsScore">0<small> / 0</small></div>
+      <div class="rs-detail" id="rsDetail"></div>
+      <div class="rs-verdict-line" id="rsVerdict"></div>
+      <div class="rs-actions">
+        <button class="btn btn-primary" id="btnRetry" onclick="retry()">再做一次</button>
+        <button class="btn btn-ghost" onclick="go('home')">返去揀課程</button>
+      </div>
+    </div>
+    <div class="sec-tt"><h2>逐題重溫</h2><span id="rsSummary"></span></div>
+    <div id="reviewList"></div>
+  </section>
+
+  <footer>日本語能力試驗 N5 ・ 文法模擬練習 ・ 依據《大家的日本語 初級1（第二版）》第 1–9 課＋N5 公開練習精選</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   課程文法重點（資料來源：教材第1–9課「文型・文法」頁）
+   ========================================================= */
+const LESSONS = {
+  1:{theme:'初次見面', pts:['名詞は名詞です','〜じゃありません','〜ですか（疑問句）','も（都係）','の（所屬）','〜さん']},
+  2:{theme:'這個/那個', pts:['これ・それ・あれ','この・その・あの＋名詞','そうです／ちがいます','〜か、〜か（選擇疑問）','の（代替名詞）','お〜']},
+  3:{theme:'喺邊度', pts:['ここ・そこ・あそこ','名詞は場所です','どこ／どちら','どこの（產地・公司）','こそあど一覽表']},
+  4:{theme:'幾點／幾時', pts:['〜時〜分（時刻）','ます・ません・ました・ませんでした','時間に','から〜まで','と（同埋）','〜ね']},
+  5:{theme:'去邊度', pts:['場所へ行きます','乗り物で','〜と（一齊）','いつ','〜よ','そうですね']},
+  6:{theme:'做啲乜', pts:['を（動作對象）','〜をします','何をしますか','なん／なに','場所で','〜ませんか／〜ましょう']},
+  7:{theme:'用乜嘢／畀人', pts:['道具で','〜語で何ですか','〜に〜をあげます','〜に〜をもらいました','もう〜ました']},
+  8:{theme:'形容詞', pts:['い形容詞／な形容詞','〜くないです／じゃありません','い形＋名詞／な形な＋名詞','〜が（不過）','とても／あまり','どんな']},
+  9:{theme:'鍾意／原因', pts:['〜が好きです／あります','〜が分かります','よく・少し・たくさん・あまり・全然','〜から（どうして）','どうして']},
+  10:{label:'加強①', theme:'助詞總複習', pts:['で（手段）','を（離開地點）','に（會面・存在）','が（動作者）','や（舉例列舉）','より（比較）','といっしょに']},
+  11:{label:'加強②', theme:'動詞形・句型', pts:['〜てもいいですか','〜たあとで','まだです','〜てください','〜てから','同義句（上手→下手等）']},
+  12:{label:'加強③', theme:'排序＋綜合', pts:['排序題：の連接・て形連接','ほど（配否定）','〜ています','おととい／同義句']}
+};
+function lessonLabel(n){ return (LESSONS[n] && LESSONS[n].label) ? LESSONS[n].label : '第'+n+'課'; }
+
+let QUESTIONS = [];
+
+/* 載入 questions.json */
+fetch('questions.json')
+  .then(res => res.json())
+  .then(data => {
+    QUESTIONS = data;
+    renderHome();
+    $('btnStartMock').textContent = '開始模擬試卷';
+    $('btnStartMock').disabled = false;
+  })
+  .catch(err => {
+    console.error('Failed to load questions.json', err);
+    showToast('載入題庫失敗，請確保 questions.json 存在');
+  });
+
+/* =========================================================
+   App 狀態同邏輯
+   ========================================================= */
+const state = {
+  mode:null,        // 'lesson' | 'mock'
+  lesson:0,
+  list:[],           // 本輪題目
+  idx:0,
+  answers:[],        // 用戶答案索引（0-3）
+  correct:0,
+  answered:false,
+  timerId:null,
+  timerLeft:0,
+  mockLen:20,
+  mockMin:15
+};
+
+const $ = id => document.getElementById(id);
+
+function go(view){
+  ['viewHome','viewQuiz','viewResult'].forEach(v => $(v).classList.add('hidden'));
+  $('btnHome').classList.toggle('hidden', view==='home');
+  $(view==='home'?'viewHome':view==='quiz'?'viewQuiz':'viewResult').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* ---------- 首頁 ---------- */
+function renderHome(){
+  const grid = $('lessonGrid');
+  grid.innerHTML = '';
+  Object.keys(LESSONS).forEach(n=>{
+    const L = LESSONS[n];
+    const qs = QUESTIONS.filter(q=>q.lesson===Number(n));
+    const best = getBest(n);
+    const card = document.createElement('button');
+    card.className = 'lesson-card';
+    card.onclick = ()=>startLesson(Number(n));
+    card.innerHTML =
+      '<div class="lc-head"><span class="lc-no">'+lessonLabel(n)+'</span><span class="lc-theme">'+L.theme+'</span></div>'+
+      '<div class="lc-pts">'+L.pts.map(p=>'<span class="lc-pts">'+p+'</span>').join('・')+'</div>'+
+      '<div class="lc-meta"><span>'+qs.length+' 題</span>'+
+      (best!==null?'<span class="lc-best">最高 '+best+' 題</span>':'<span>未做過</span>')+
+      '</div>';
+    grid.appendChild(card);
+  });
+}
+
+function getBest(n){
+  try{
+    const v = localStorage.getItem('jlptn5best_'+n);
+    return v===null?null:Number(v);
+  }catch(e){ return null; }
+}
+function setBest(n,val){
+  try{
+    const cur = getBest(n);
+    if(cur===null || val>cur) localStorage.setItem('jlptn5best_'+n, String(val));
+  }catch(e){}
+}
+
+/* ---------- 開始測驗 ---------- */
+function startLesson(n){
+  if(QUESTIONS.length === 0){ showToast('題庫尚未載入'); return; }
+  state.mode='lesson'; state.lesson=n;
+  state.list = shuffle(QUESTIONS.filter(q=>q.lesson===n));
+  begin(lessonLabel(n)+' 操練');
+}
+function startMock(){
+  if(QUESTIONS.length === 0){ showToast('題庫尚未載入'); return; }
+  state.mode='mock'; state.lesson=0;
+  state.list = shuffle(QUESTIONS).slice(0, state.mockLen);
+  begin('混合模擬試卷');
+  state.timerLeft = state.mockMin*60;
+  $('quizTimer').classList.remove('hidden');
+  $('quizTimer').classList.remove('overtime');
+  $('quizTimer').textContent = fmtTime(state.timerLeft);
+  state.timerId = setInterval(()=>{
+    state.timerLeft--;
+    if(state.timerLeft<=0){
+      state.timerLeft=0;
+      $('quizTimer').classList.add('overtime');
+      $('quizTimer').textContent = '時間到';
+      clearInterval(state.timerId);
+      if(!state.answered) showToast('時間到，盡快完成剩低嘅題目');
+    }else{
+      $('quizTimer').textContent = fmtTime(state.timerLeft);
+    }
+  },1000);
+}
+function begin(modeLabel){
+  state.idx=0; state.answers=[]; state.correct=0; state.answered=false;
+  clearInterval(state.timerId);
+  if(state.mode!=='mock') $('quizTimer').classList.add('hidden');
+  $('quizMode').textContent = modeLabel;
+  go('quiz');
+  showQ();
+}
+function retry(){
+  if(state.mode==='mock') startMock();
+  else startLesson(state.lesson);
+}
+
+/* ---------- 顯示題目 ---------- */
+function fmtTime(s){
+  const m=Math.floor(s/60), r=s%60;
+  return m+':'+(r<10?'0':'')+r;
+}
+function showQ(){
+  state.answered=false;
+  const q = state.list[state.idx];
+  $('quizProg').textContent = '第 '+(state.idx+1)+' 題 / 全 '+state.list.length+' 題';
+  $('progFill').style.width = (state.idx/state.list.length*100)+'%';
+  $('qTag').textContent = lessonLabel(q.lesson)+'・'+q.point;
+  $('qInst').textContent = q.type==='mc'
+    ? '（ ）に入れる最もよいものを、下の①〜④から一つ選びなさい。'
+    : '正しい順番はどれですか。★の言葉はどこに入りますか。';
+  $('btnNext').classList.add('hidden');
+  $('btnNext').textContent = state.idx===state.list.length-1 ? '睇結果' : '下一題';
+  $('qFeedbackLine').textContent='';
+  $('explainArea').innerHTML='';
+
+  if(q.type==='mc'){
+    $('qBody').innerHTML = '<div class="q-text">'+q.s.replace('＿＿','<span style="border-bottom:2px solid #26221e;display:inline-block;min-width:56px">&nbsp;</span>')+(q.ctx?'':'')+'</div>'+
+      (q.ctx?'<div class="q-hint">'+q.ctx+'</div>':'');
+    renderOptions(q.opts.map(o=>({body:o})), q);
+  }else{
+    const lead = q.lead ? '<span>'+q.lead+'</span>' : '';
+    let sk = lead;
+    for(let i=1;i<=4;i++){
+      sk += '<span class="slot">'+i+'</span> ';
+    }
+    if(q.tail) sk += '<span>'+q.tail+'</span>';
+    const boxWords = q.box.map((w,i)=> i===q.star
+      ? '<span class="w"><span class="star-mark">★</span><span>'+w+'</span></span>'
+      : '<span class="w">'+w+'</span>');
+    $('qBody').innerHTML =
+      '<div class="order-skeleton">'+sk+'</div>'+
+      '<div class="order-box">'+boxWords.join('')+'</div>'+
+      (q.ctx?'<div class="q-hint" style="margin-top:10px">'+q.ctx+'</div>':'');
+    renderOptions([{body:'1'},{body:'2'},{body:'3'},{body:'4'}], q, true);
+  }
+}
+
+function renderOptions(optList, q, isOrder){
+  const area = $('optArea');
+  area.innerHTML='';
+  area.className='opt-list';
+  optList.forEach((o,i)=>{
+    const b = document.createElement('button');
+    b.className='opt';
+    if(isOrder){
+      b.innerHTML = '<span class="num" style="width:34px;height:34px;font-size:16px">'+(i+1)+'</span><span class="opt-body">填入上面第 <b style="color:#d9333f">'+(i+1)+'</b> 個空位</span>';
+    }else{
+      b.innerHTML = '<span class="num">'+'①②③④'[i]+'</span><span class="opt-body">'+o.body+'</span>';
+    }
+    b.onclick = ()=>answer(i,q);
+    area.appendChild(b);
+  });
+}
+
+function answer(i,q){
+  if(state.answered) return;
+  state.answered=true;
+  state.answers[state.idx]=i;
+  const isOk = (i===q.a);
+  if(isOk) state.correct++;
+  const opts = $('optArea').querySelectorAll('.opt');
+  opts.forEach((el,j)=>{
+    el.classList.add('locked');
+    if(j===q.a) el.classList.add('correct');
+    if(j===i && !isOk) el.classList.add('wrong');
+  });
+
+  /* 解說 */
+  let exp = '<div class="explain">';
+  exp += '<div class="verdict '+(isOk?'ok':'ng')+'">'+(isOk?'◯ 正解':'✕ 不正解')+'</div>';
+  exp += '<span class="exp-grammar">'+q.point+'</span>';
+  exp += '<div class="exp-full"><span class="jp">'+q.full+'</span><span class="zh">'+q.zh+'</span></div>';
+  exp += '<div class="exp-body">'+q.exp+'</div>';
+  exp += '<div class="exp-src">'+(q.srcFull || ('出處：《大家的日本語 初級1（第二版）》第'+q.lesson+'課 文法'+(q.src||'')))+'</div>';
+  exp += '</div>';
+  $('explainArea').innerHTML = exp;
+  $('btnNext').classList.remove('hidden');
+  $('qFeedbackLine').textContent = '';
+}
+
+function nextQ(){
+  if(state.idx >= state.list.length-1){
+    finish();
+  }else{
+    state.idx++;
+    showQ();
+  }
+}
+
+/* ---------- 結果 ---------- */
+function finish(){
+  clearInterval(state.timerId);
+  const total = state.list.length;
+  const pct = Math.round(state.correct/total*100);
+  const pass = pct>=70;
+  $('rsScore').innerHTML = state.correct+'<small> / '+total+'</small>';
+  $('rsDetail').textContent = '正答率 '+pct+'%';
+  const v=$('rsVerdict');
+  v.textContent = pass?'合格！繼續保持':'未達 70%，睇返錯咗嗰啲題目嘅解釋再試';
+  v.className='rs-verdict-line '+(pass?'pass':'fail');
+  if(state.mode==='lesson') setBest(state.lesson, state.correct);
+
+  $('rsSummary').textContent = '答錯咗嘅題目留喺上面，解釋喺每題下面';
+  const list = $('reviewList');
+  list.innerHTML='';
+  state.list.forEach((q,i)=>{
+    const ua = state.answers[i];
+    const ok = ua===q.a;
+    const item = document.createElement('div');
+    item.className='review-item';
+    let qText;
+    if(q.type==='mc'){
+      qText = '<span>'+(q.lead||'')+q.s+'</span>';
+    }else{
+      qText = '<span>'+(q.lead||'')+'＿ ＿ ＿ ＿'+(q.tail||'')+' （★'+q.box[q.star]+'）</span>';
+    }
+    let ansLine;
+    if(q.type==='mc'){
+      ansLine = '你揀咗 <span class="yours '+(ok?'ok':'ng')+'">'+q.opts[ua]+'</span> 正解 <b>'+q.opts[q.a]+'</b>';
+    }else{
+      ansLine = '你揀咗位置 <span class="yours '+(ok?'ok':'ng')+'">'+(ua+1)+'</span> 正解係位置 <b>'+(q.a+1)+'</b>（'+q.full+'）';
+    }
+    item.innerHTML =
+      '<div class="ri-head"><span class="ri-badge '+(ok?'ok':'ng')+'">'+(ok?'◯ 正解':'✕ 錯咗')+'</span>'+
+      '<span class="ri-src">'+lessonLabel(q.lesson)+'・'+q.point+'</span></div>'+
+      '<div class="ri-q">'+qText+'</div>'+
+      '<div class="ri-answer">'+ansLine+'</div>'+
+      (ok?'':'<div class="ri-exp">'+q.exp+'</div>');
+    list.appendChild(item);
+  });
+  go('result');
+}
+
+function showToast(msg){
+  const t=$('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* 初始狀態直接載入主畫面（等待 fetch 完成後才顯示按鈕） */
+go('home');
+</script>
+</body>
+</html>
