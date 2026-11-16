@@ -177,6 +177,11 @@
   }
   .order-box .w{display:inline-flex;gap:2px;}
   .order-box .star-mark{color:var(--accent);font-weight:700;}
+  if(state.mode==='mock'){
+    $('btnNext').classList.remove('hidden');
+    $('qFeedbackLine').textContent='答案已記錄，交卷後顯示解釋';
+    return;
+  }
   /* 解說 */
   .explain{
     margin-top:16px;border-top:1px solid var(--line);padding-top:14px;
@@ -346,19 +351,58 @@ function lessonLabel(n){ return (LESSONS[n] && LESSONS[n].label) ? LESSONS[n].la
 
 let QUESTIONS = [];
 
-/* 載入 questions.json */
-fetch('questions.json')
-  .then(res => res.json())
-  .then(data => {
-    QUESTIONS = data;
-    renderHome();
-    $('btnStartMock').textContent = '開始模擬試卷';
-    $('btnStartMock').disabled = false;
-  })
-  .catch(err => {
-    console.error('Failed to load questions.json', err);
-    showToast('載入題庫失敗，請確保 questions.json 存在');
+/* Load and validate the separate editable JSON question bank. */
+function normalizeQuestions(data){
+  if(!Array.isArray(data) || !data.length) throw new Error('Question bank must be a non-empty array.');
+  const ids=new Set();
+  return data.map((q,i)=>{
+    const label='Question '+(i+1);
+    if(!q || typeof q!=='object') throw new Error(label+': invalid question.');
+    if(q.id==null || ids.has(q.id)) throw new Error(label+': missing or duplicate id.');
+    ids.add(q.id);
+    const match=/^(Lesson|Advanced)\s+(\d+)$/.exec(q.category||'');
+    if(!match || !LESSONS[Number(match[2])]) throw new Error(label+': category must match an existing lesson (Lesson 1–9 or Advanced 10–12).');
+    if(typeof q.question!=='string' || !q.question.trim()) throw new Error(label+': question is required.');
+    if(!Array.isArray(q.options) || q.options.length!==4 || q.options.some(o=>typeof o!=='string')) throw new Error(label+': exactly four text options required.');
+    if(!Number.isInteger(q.answerIndex) || q.answerIndex<0 || q.answerIndex>3) throw new Error(label+': answerIndex must be 0, 1, 2 or 3.');
+    if(typeof q.explanation!=='string') throw new Error(label+': explanation must be text.');
+    const exp=q.explanation.replace(/\\n/g,'\n');
+    const full=/完整句：([^\n]*)/.exec(exp), zh=/句意：([^\n]*)/.exec(exp);
+    return {id:q.id,lesson:Number(match[2]),type:'mc',point:q.question.startsWith('排序題')?'排序題':'文法練習',s:q.question.replace(/\\n/g,'\n').replace(/\n/g,'<br>'),opts:q.options,a:q.answerIndex,full:full?full[1]:'',zh:zh?zh[1]:'',exp:exp.split('\n完整句：')[0].replace(/\n/g,'<br>')};
   });
+}
+function applyQuestionBank(data){
+  const next=normalizeQuestions(data);
+  clearInterval(state.timerId);
+  QUESTIONS=next;
+  renderHome();
+  $('btnStartMock').disabled=false;
+  $('btnStartMock').textContent='開始模擬試卷';
+  $('bankStatus').textContent='已載入 '+QUESTIONS.length+' 題。修改 JSON 後，請重新選取檔案或重新整理網頁。';
+  go('home');
+}
+document.addEventListener('DOMContentLoaded',async()=>{
+  const panel=document.createElement('div');
+  panel.style.cssText='background:white;border:1px solid #ddd5c7;border-radius:12px;padding:14px;margin:12px 0;font-size:13px';
+  panel.innerHTML='<label>題庫檔案： <input id="bankFile" type="file" accept=".json,application/json"></label><p id="bankStatus" role="status" style="margin-top:8px;white-space:pre-wrap"></p>';
+  $('lessonGrid').parentNode.insertBefore(panel,$('lessonGrid'));
+  $('bankFile').addEventListener('change',async e=>{
+    const file=e.target.files[0]; if(!file) return;
+    try {applyQuestionBank(JSON.parse(await file.text()));}
+    catch(err){$('bankStatus').textContent='載入失敗：'+err.message+'\n請修正 JSON 後重新選取。';}
+    e.target.value='';
+  });
+  if(location.protocol==='file:'){
+    $('bankStatus').textContent='請按上面「選擇檔案」載入同一資料夾內的 questions.json。題庫不會上傳。';
+    return;
+  }
+  $('bankStatus').textContent='正在載入 questions.json…';
+  try{
+    const response=await fetch('questions.json',{cache:'no-store'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    applyQuestionBank(await response.json());
+  }catch(err){$('bankStatus').textContent='自動載入失敗：'+err.message+'\n請按上面「選擇檔案」手動載入 questions.json。';}
+});
 
 /* =========================================================
    App 狀態同邏輯
@@ -380,6 +424,7 @@ const state = {
 const $ = id => document.getElementById(id);
 
 function go(view){
+  if(view==='home') clearInterval(state.timerId);
   ['viewHome','viewQuiz','viewResult'].forEach(v => $(v).classList.add('hidden'));
   $('btnHome').classList.toggle('hidden', view==='home');
   $(view==='home'?'viewHome':view==='quiz'?'viewQuiz':'viewResult').classList.remove('hidden');
@@ -403,6 +448,7 @@ function renderHome(){
     const L = LESSONS[n];
     const qs = QUESTIONS.filter(q=>q.lesson===Number(n));
     const best = getBest(n);
+    if(!qs.length) return;
     const card = document.createElement('button');
     card.className = 'lesson-card';
     card.onclick = ()=>startLesson(Number(n));
@@ -434,6 +480,7 @@ function startLesson(n){
   if(QUESTIONS.length === 0){ showToast('題庫尚未載入'); return; }
   state.mode='lesson'; state.lesson=n;
   state.list = shuffle(QUESTIONS.filter(q=>q.lesson===n));
+  if(!state.list.length){showToast('此課沒有題目');return;}
   begin(lessonLabel(n)+' 操練');
 }
 function startMock(){
@@ -538,10 +585,16 @@ function answer(i,q){
   const opts = $('optArea').querySelectorAll('.opt');
   opts.forEach((el,j)=>{
     el.classList.add('locked');
-    if(j===q.a) el.classList.add('correct');
-    if(j===i && !isOk) el.classList.add('wrong');
+    if(state.mode!=='mock' && j===q.a) el.classList.add('correct');
+    if(state.mode!=='mock' && j===i && !isOk) el.classList.add('wrong');
+    if(state.mode==='mock' && j===i) el.style.borderColor='var(--navy)';
   });
 
+  if(state.mode==='mock'){
+    $('btnNext').classList.remove('hidden');
+    $('qFeedbackLine').textContent='答案已記錄，交卷後顯示解釋';
+    return;
+  }
   /* 解說 */
   let exp = '<div class="explain">';
   exp += '<div class="verdict '+(isOk?'ok':'ng')+'">'+(isOk?'◯ 正解':'✕ 不正解')+'</div>';
